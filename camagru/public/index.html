@@ -2,8 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <!--this line is for the icon-->
-    <link rel="shortcut icon" href="%PUBLIC_URL%/parrot.png" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/tty.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <!--
@@ -20,15 +19,23 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Ɔamagru</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <div id="Gallery" className="Gallery"><img src={logo} className="App-logo" alt="logo" />
-      <img src={parrot} className="Parrot" alt="parrot" />
-      <img src={tty} className="Tty" alt="tty" />
-      <img src={sea} className="Sea" alt="sea" /></div>
+    <div id="root">
+    </div>
+    <div id ="webcam-container">
+       
+      <div id= "grid">
+        <script src="../src/grid.js"></script>
+      </div>
+
+      <!-- <div id="webcam-feed">
+          <script src="../src/webcam.js"></script>
+      </div> -->
+
+    </div>
+    
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
