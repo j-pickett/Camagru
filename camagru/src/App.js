@@ -1,36 +1,34 @@
 import React from 'react';
-import cash from './images/cash.png';
-import grillz from './images/grillz.png'
-import tty from './images/tty.png';
-import parrot from './images/parrot.png';
-import hat from './images/hat.png';
-import banner from './images/Camagru.png';
-//import draggable from './drag'
-//import droppable from './drop'
-import Draggable from 'react-draggable';
+import Gallery from './components/gallery/gallery'
+import Webcam from './components/webcam/webcam';
+import Taskbar from './components/taskbar/taskbar';
+import PropTypes from "prop-types";
+import Styles from "./styles";
+import { withStyles } from "@material-ui/core/styles";
+import './app.css';
+
 
 const styles = {
   container: {
       textAlign: 'center',
-      height: '100%',
-      border: '1px solid rgba(0, 0, 0, 2)'
+      minHeight: '100vh',
+      minWidth: '100vw',
+      background:
+      "url(http://papers.co/wallpaper/papers.co-vm09-poly-blue-purple-abstract-pattern-36-3840x2400-4k-wallpaper.jpg) no-repeat center center fixed",
+    backgroundSize: '100% 100%',
   },
   appBanner: {
-    width: '122vmin',
-    height: '45vmin',
+    width: '10vmin',
+    height: '4vmin',
     position: 'center top',
-    border: '1px solid rgba(0, 0, 0, 2)'
 
   },
   header: {
-    backgroundColor: '#f0c0f0',
-    minHeight: '70vh',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 'calc(10px + 2vmin)',
     color: 'rgb(255, 255, 255)',
-    border: '1px solid rgba(255, 190, 255, 2)'
   },
   sticker: {
     minHeight: '20vmin',
@@ -38,27 +36,47 @@ const styles = {
     paddingRight: '15px',
     paddingLeft: '15px',
     objectFit: 'contain',
-    border: '1px solid rgba(255, 255, 0, 2)'
+  },
+  gallery: {
+    paddingBottom: 25,
+    paddingTop: 25,
+  },
+  webcam: {
+    height: '50%',
+  },
+  card: {
+
   }
 }
 
-function App() {
+const App = props => {
+  /* const { classes } = props; */
   return (
+
     <div style={styles.container}>
       <header style={styles.header}>
-      <div style={styles.banner}>
-      <img src={banner} style={styles.appBanner} alt="banner" />
+
+      <div style={styles.taskbar}>
+      <Taskbar />
       </div>
+
       <div style={styles.gallery}>
-      <Draggable><img src={tty} style={styles.sticker} alt="tty" /></Draggable>
-      <Draggable><img src={parrot} style={styles.sticker} alt="parrot" /></Draggable>
-      <Draggable><img src={hat} style={styles.sticker} alt="hat" /></Draggable>
-      <Draggable><img src={grillz} style={styles.sticker} alt="grillz" /></Draggable>
-      <Draggable><img src={cash} style={styles.sticker} alt="cash" /></Draggable>
-        </div>
+      <Gallery>
+      </Gallery>
+      </div>
+
       </header>
+
+      <div style={styles.webcam}>
+      <Webcam />
+      </div>
+
     </div>
   );
 }
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+export default (withStyles(Styles)(App));
