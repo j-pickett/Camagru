@@ -14,39 +14,32 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import Mail from '@material-ui/icons/Mail';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Banner from '../images/Camagru.png';
 import MenuButton from './menu';
-/* import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup'; */
+import Login from './login';
+import ReactDOM from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Login from '../../pages/login';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
-
 
 const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#2c387e',
     },
-    secondary: {
-        main: '#33eaff'
-    }
 },
 });
 
 const styles = theme => ({
   root: {
     width: '100%',
-    colorDefault:'red',
   },
   NavBanner: {
     display: 'block',
   marginLeft: 'auto',
   marginRight: 'auto',
-  width: '50%',
+  width: '100%',
+  paddingTop: 10,
   },
   grow: {
     flexGrow: 1,
@@ -92,9 +85,9 @@ const styles = theme => ({
     width: '100%',
   },
   inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
+    paddingTop: theme.spacing.unit * 1,
+    paddingRight: theme.spacing.unit * 10,
+    paddingBottom: theme.spacing.unit * 1,
     paddingLeft: theme.spacing.unit * 10,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -114,8 +107,18 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+    account: {
+      color: '#33eaff',
+    },
+    mail: {
+      color: '#33eaff',
+    }
   },
 });
+
+function SwitchToLogin() {
+	ReactDOM.render(<Login />, document.getElementById('root'));
+}
 
 class PrimarySearchAppBar extends React.Component {
   state = {
@@ -172,7 +175,7 @@ class PrimarySearchAppBar extends React.Component {
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
             <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
+              <Mail />
             </Badge>
           </IconButton>
           <p>Notifications</p>
@@ -187,9 +190,9 @@ class PrimarySearchAppBar extends React.Component {
     );
 
     return (
+      <MuiThemeProvider theme={theme}>
       <div className={classes.root}>
-       <MuiThemeProvider theme={theme}>
-        <AppBar position="static">
+       <AppBar position="static">
           <Toolbar>
 
           <div id="drawer">
@@ -212,28 +215,22 @@ class PrimarySearchAppBar extends React.Component {
               />
             </div>
 
-              <div className={classes.NavBanner}>
-              <img src={Banner} style={styles.NavBanner} alt="banner" width="450px"height="75px" padding-top="25px"></img>
+             <div className={classes.NavBanner}>
+              <marquee><img src={Banner} style={styles.NavBanner} width="450px"height="75px" padding-top="25px"></img></marquee>{/* eslint-disable-line */}
               </div>
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-            
-            <Router>
+            <div className={classes.mail}>
               <IconButton color="secondary">
-                <Badge badgeContent={'small text'} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-                </IconButton>
-                <a href="/login">
-              <IconButton color="secondary">
-                  <AccountCircle />
-                </IconButton>
-               </a>
-                <Route path="/login" exact component={Login} />
-                </Router>
-        </div>
+                {/* <Badge badgeContent={'small text'} color="secondary"> */}
+                  <Mail />
+                {/* </Badge> */}
+                </IconButton></div>
 
+              <div className={classes.account}><IconButton color="secondary" ><AccountCircle onClick={SwitchToLogin}/></IconButton></div>
+
+        </div>
             <div className={classes.sectionMobile}>
               <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
                 <MoreIcon />
@@ -241,9 +238,9 @@ class PrimarySearchAppBar extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-        </MuiThemeProvider>
-        {renderMobileMenu}
+      {renderMobileMenu}
       </div>
+      </MuiThemeProvider>
     );
   }
 }

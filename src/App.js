@@ -1,12 +1,10 @@
 import React from 'react';
-import Gallery from './components/gallery/gallery'
+import Gallery from './components/gallery/gallery';
 import Webcam from './components/webcam/webcam';
 import Taskbar from './components/taskbar/taskbar';
 import PropTypes from "prop-types";
-import Styles from "./styles";
 import { withStyles } from "@material-ui/core/styles";
-import './app.css';
-
+import MyFooter from './components/cover_image/footer';
 
 const styles = {
   container: {
@@ -16,6 +14,7 @@ const styles = {
       background:
       "url(http://papers.co/wallpaper/papers.co-vm09-poly-blue-purple-abstract-pattern-36-3840x2400-4k-wallpaper.jpg) no-repeat center center fixed",
     backgroundSize: '100% 100%',
+    position: "relative",
   },
   appBanner: {
     width: '10vmin',
@@ -28,7 +27,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 'calc(10px + 2vmin)',
-    color: 'rgb(255, 255, 255)',
+    color: 'rgba(255, 255, 255, 0.6)',
   },
   sticker: {
     minHeight: '20vmin',
@@ -36,6 +35,7 @@ const styles = {
     paddingRight: '15px',
     paddingLeft: '15px',
     objectFit: 'contain',
+    top: 0,
   },
   gallery: {
     paddingBottom: 25,
@@ -44,15 +44,18 @@ const styles = {
   webcam: {
     height: '50%',
   },
-  card: {
-
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: 60,
   }
 }
 
 const App = props => {
   /* const { classes } = props; */
   return (
-
+    
     <div style={styles.container}>
       <header style={styles.header}>
 
@@ -71,6 +74,9 @@ const App = props => {
       <Webcam />
       </div>
 
+      <div style={styles.footer}>
+      <MyFooter/>
+      </div>
     </div>
   );
 }
@@ -79,4 +85,4 @@ App.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default (withStyles(Styles)(App));
+export default (withStyles(styles)(App));
