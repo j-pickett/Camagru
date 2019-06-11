@@ -6,7 +6,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
-
+ 
 
 const styles = {
     container: {
@@ -74,10 +74,18 @@ class WebcamCapture extends React.Component {
     }
 
 
+    getCurrentIndex() {
+      return this.state.currentIndex;
+    }
+
     setRef = webcam => {
         this.webcam = webcam;
       };
-    
+
+      _onImageClick(event) {
+        console.debug('clicked on image', event.target, 'at index', this._imageGallery.getCurrentIndex());
+      }
+
       _onImageLoad(event) {
         console.debug('loaded image', event.target.src);
       }
@@ -92,13 +100,11 @@ class WebcamCapture extends React.Component {
         this.setState(this.state);
         console.log(this.state); */
         let picture = this.webcam.getScreenshot();
-        console.log(picture);
+        //console.log(picture);
         var newpic = {
-        	orignal: `${picture}.jpg`,
+        	orignal: `${picture}`,
         	thumbnail: `${picture}`
         };
-        /* this.state.images.push(picture); */
-
         this.state.images.push(newpic);
         this.setState(this.state);
       };
@@ -107,55 +113,79 @@ class WebcamCapture extends React.Component {
         const videoConstraints = {
           width: 1280,
           height: 720,
-          facingMode: "user"
-        };
-    
-        return (
-           <MuiThemeProvider theme={theme}>
-          <div style={styles.container}>
-            <div style={styles.Webcam}>
-            <Webcam
-              audio={false}
-              height={720}
-              ref={this.setRef}
-              screenshotFormat="image/jpeg"
-              width={900}
-              videoConstraints={videoConstraints}
-            />
-            
-          <div style={styles.button} >
-        <IconButton variant="raised" color="secondary" component="span">
-          <PhotoCamera onClick={this.capture}/>
-        </IconButton>
-          </div>
-          </div>
+          facingMode: "user",
 
-          <div style={styles.Gallery}>
-          <ImageGallery 
-          items={this.state.images}
-          lazyLoad={false}
-          onImageLoad={this._onImageLoad}
-          infinite={this.state.infinite}
-          showBullets={this.state.showBullets}
-          showThumbnails={this.state.showThumbnails}
-          showIndex={true}
-          showNav={this.state.showNav}
-          isRTL={false
-          }
-            showFullscreenButton={false}
-          showPlayButton={this.state.showPlayButton && this.state.showGalleryPlayButton}
-          slideDuration={parseInt(this.state.slideDuration)}
-          slideInterval={parseInt(this.state.slideInterval)}
-          slideOnThumbnailOver={this.state.slideOnThumbnailOver}
-          thumbnailPosition={this.state.thumbnailPosition}
-          stopPropagation={this.state.stopPropagation}
-          additionalClass="app-image-gallery"/>
-          </div>
-          </div>
-          </MuiThemeProvider>
-        );
+        };
+
+  return(/*<FirebaseContext.Consumer> {firebase => {
+    return (*/
+          
+      <MuiThemeProvider theme={theme}>
+     <div style={styles.container}>
+       <div style={styles.Webcam}>
+       <Webcam
+         audio={false}
+         height={720}
+         ref={this.setRef}
+         screenshotFormat="image/jpeg"
+         width={900}
+         videoConstraints={videoConstraints}
+       />
+       
+     <div style={styles.button} >
+   <IconButton variant="raised" color="secondary" component="span" onClick={this.capture}>
+     <PhotoCamera/>
+   </IconButton>
+     </div>
+     </div>
+
+     <div style={styles.Gallery}>
+     <ImageGallery 
+     items={this.state.images}
+     lazyLoad={false}
+     onImageLoad={this._onImageLoad}
+     infinite={this.state.infinite}
+     showBullets={this.state.showBullets}
+     showThumbnails={this.state.showThumbnails}
+     showIndex={true}
+     showNav={this.state.showNav}
+     isRTL={false}
+     showFullscreenButton={false}
+     showPlayButton={this.state.showPlayButton && this.state.showGalleryPlayButton}
+     slideDuration={parseInt(this.state.slideDuration)}
+     slideInterval={parseInt(this.state.slideInterval)}
+     slideOnThumbnailOver={this.state.slideOnThumbnailOver}
+     thumbnailPosition={this.state.thumbnailPosition}
+     stopPropagation={this.state.stopPropagation}
+     additionalClass="app-image-gallery"/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <br/>
+     <ImageGallery/>
+     </div>
+     </div>
+     </MuiThemeProvider>
+   );
+  /*}}</FirebaseContext.Consumer>);*/
       }
       
 }
+
+/*ADD CODE FOR MOBILE SWIPING ON GALLERY */
 
 export default (WebcamCapture);

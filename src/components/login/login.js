@@ -12,8 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import ReactDOM from 'react-dom';
-import SignUp from './signup';
+import SignUp from '../signup';
 import React, { Component } from 'react';
+import App from '../../App';
 
 function MadeWithLove() {
   return (
@@ -73,27 +74,13 @@ function SwitchToSignUp() {
 export default class SignInSide extends Component {
   constructor(props) {
     super(props);
-    //this.login = this.login.bind(this);
+    this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       email: '',
       password: ''
     };
   }
-
-
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  /* login(e) {
-    e.preventDefault();
-    fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
-    }).catch((error) => {
-        console.log(error);
-        ReactDOM.render(<App />, document.getElementById('root'));
-      });
-  } */
 
   render() {
     const classes = useStyles;
@@ -128,7 +115,7 @@ export default class SignInSide extends Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-              //onClick={this.login}
+              onClick={this.login}
 			  >
               Sign In
             </Button>

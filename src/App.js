@@ -5,6 +5,22 @@ import Taskbar from './components/taskbar/taskbar';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import MyFooter from './components/cover_image/footer';
+import Navigation from './components/navigation';
+import AccountPage from './components/account';
+ import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+import SignUpPage from './components/signup';
+import HomePage from './components/home';
+import * as ROUTES from './components/constants/routes';
+import SignInPage from './components/signin';
+import AdminPage from './components/admin';
+import { withAuthentication } from './components/session';
+/*import LoginPage from './components/taskbar/login';
+import SignupPage from './components/taskbar/signup';
+import { withFirebase } from './components/firebase';
+ */
 
 const styles = {
   container: {
@@ -52,32 +68,42 @@ const styles = {
   }
 }
 
-const App = props => {
-  /* const { classes } = props; */
+const App = () => {
   return (
-    
     <div style={styles.container}>
       <header style={styles.header}>
 
+      
       <div style={styles.taskbar}>
       <Taskbar />
       </div>
 
-      <div style={styles.gallery}>
+      <Router>
+          <div>
+          <Navigation/>
+            <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+            <Route exact path={ROUTES.HOME} component={HomePage} />
+            <Route exact path={ROUTES.ADMIN} component={AdminPage} />
+            <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
+            <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
+          </div>
+        </Router>
+
+        <div style={styles.gallery}>
       <Gallery>
       </Gallery>
       </div>
 
       </header>
 
-      <div style={styles.webcam}>
+        <div style={styles.webcam}>
       <Webcam />
       </div>
-
       <div style={styles.footer}>
       <MyFooter/>
       </div>
     </div>
+    
   );
 }
 
@@ -85,4 +111,4 @@ App.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default (withStyles(styles)(App));
+export default withAuthentication((withStyles(styles)(App)));

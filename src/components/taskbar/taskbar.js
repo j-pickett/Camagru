@@ -18,8 +18,14 @@ import Mail from '@material-ui/icons/Mail';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Banner from '../images/Camagru.png';
 import MenuButton from './menu';
-import Login from './login';
+import SignUp from '../signup';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+import * as ROUTES from '../constants/routes';
+import {
+  BrowserRouter as Router,
+  //Route,
+} from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -117,7 +123,7 @@ const styles = theme => ({
 });
 
 function SwitchToLogin() {
-	ReactDOM.render(<Login />, document.getElementById('root'));
+	ReactDOM.render(<SignUp />, document.getElementById('root'));
 }
 
 class PrimarySearchAppBar extends React.Component {
@@ -216,8 +222,11 @@ class PrimarySearchAppBar extends React.Component {
             </div>
 
              <div className={classes.NavBanner}>
-              <marquee><img src={Banner} style={styles.NavBanner} width="450px"height="75px" padding-top="25px"></img></marquee>{/* eslint-disable-line */}
+             <Router>
+             <marquee><Link to={ROUTES.LANDING}><img src={Banner} style={styles.NavBanner} width="450px"height="75px" padding-top="25px"></img></Link></marquee>{/* eslint-disable-line */}             
+             </Router>
               </div>
+              
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
