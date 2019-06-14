@@ -58,9 +58,9 @@ class UserListBase extends Component {
       <div>
         <h2>Users</h2>
         {loading && <div>Loading ...</div>}
-        <ul>
+        <ul style={{ listStyleType: "none" }}>
           {users.map(user => (
-            <li key={user.uid}>
+            <li key={user.uid} >
               <span>
                 <strong>ID:</strong> {user.uid}
               </span>

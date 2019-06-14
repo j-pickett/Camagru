@@ -11,6 +11,7 @@ import "react-image-gallery/styles/css/image-gallery.css";
 const styles = {
     container: {
         display: 'flex',
+        alignItems: 'left',
         flexDirection: 'flex-end',
         justifyContent: 'space-between',
         width: '100%',
@@ -25,10 +26,11 @@ const styles = {
       maxWidth: '50vw',
       minWidth: '5vw',
       position: 'relative',
-      left: -40,
+      align: 'left',
       paddingTop: '50px',
     },
     button: {
+      size: 80,
        secondary: {
         main: '#33eaff',
     }
@@ -125,10 +127,10 @@ class WebcamCapture extends React.Component {
        <div style={styles.Webcam}>
        <Webcam
          audio={false}
-         height={720}
+         height={400}
          ref={this.setRef}
          screenshotFormat="image/jpeg"
-         width={900}
+         width={400}
          videoConstraints={videoConstraints}
        />
        
@@ -158,30 +160,11 @@ class WebcamCapture extends React.Component {
      thumbnailPosition={this.state.thumbnailPosition}
      stopPropagation={this.state.stopPropagation}
      additionalClass="app-image-gallery"/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
-     <br/>
      <ImageGallery/>
      </div>
      </div>
      </MuiThemeProvider>
    );
-  /*}}</FirebaseContext.Consumer>);*/
       }
       
 }

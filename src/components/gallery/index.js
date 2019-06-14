@@ -25,16 +25,17 @@ const styles = theme => ({
     },
   });
   
-  function Gallery() {
+  class Gallery extends React.Component {
+   render() {
     return (
         <div style={styles.root}>
-        <Draggable><img src={tty} style={styles.gallery} alt="tty" height="150"/></Draggable>
-        <Draggable><img src={parrot} style={styles.gallery} alt="parrot" height="150"/></Draggable>
-        <Draggable><img src={hat} style={styles.gallery} alt="hat" height="150"/></Draggable>
-        <Draggable><img src={grillz} style={styles.gallery} alt="grillz" height="150"/></Draggable>
-        <Draggable><img src={cash} style={styles.gallery} alt="cash" height="150"/></Draggable>
+        <Draggable><img src={tty} style={styles.gallery} alt="tty" /*height="120vh"*/ height="90vh"/></Draggable>
+        <Draggable><img src={parrot} style={styles.gallery} alt="parrot" /*height="120vh"*/ height="90vh"/></Draggable>
+        <Draggable><img src={hat} style={styles.gallery} alt="hat" /*height="120vh"*/ height="90vh"/></Draggable>
+        <Draggable><img src={grillz} style={styles.gallery} alt="grillz" /*height="120vh"*/ height="90vh"/></Draggable>
+        <Draggable><img src={cash} style={styles.gallery} alt="cash" /*height="120vh"*/ height="90vh"/></Draggable>
         </div>
-    );
+   )};
 }
 
 export default withStyles(styles)(Gallery);

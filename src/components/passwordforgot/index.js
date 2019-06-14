@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import Button from '@material-ui/core/Button';
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../constants/routes';
+import Input from '@material-ui/core/Input';
 
 const PasswordForgetPage = () => (
   <div>
@@ -49,16 +50,16 @@ class PasswordForgetFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+        <Input
           name="email"
           value={this.state.email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
-        <button disabled={isInvalid} type="submit">
+        <Button disabled={isInvalid} type="submit">
           Reset My Password
-        </button>
+        </Button>
 
         {error && <p>{error.message}</p>}
       </form>

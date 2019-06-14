@@ -12,15 +12,18 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
-import Mail from '@material-ui/icons/Mail';
+import Webcam from '@material-ui/icons/Videocam';
+import Chat from '@material-ui/icons/Forum';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Banner from '../images/Camagru.png';
 import MenuButton from './menu';
-import SignUp from '../signup';
-import ReactDOM from 'react-dom';
+/* import SignUp from '../signup';
+import Mail from '@material-ui/icons/Mail';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import ReactDOM from 'react-dom';*/
 import { Link } from 'react-router-dom';
+import Navigation from '../navigation';
 import * as ROUTES from '../constants/routes';
 import {
   BrowserRouter as Router,
@@ -28,11 +31,14 @@ import {
 } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
+ const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#2c387e',
     },
+    secondary: {
+        main: '#33eaff',
+    }
 },
 });
 
@@ -122,9 +128,9 @@ const styles = theme => ({
   },
 });
 
-function SwitchToLogin() {
+/* function SwitchToLogin() {
 	ReactDOM.render(<SignUp />, document.getElementById('root'));
-}
+} */
 
 class PrimarySearchAppBar extends React.Component {
   state = {
@@ -172,37 +178,28 @@ class PrimarySearchAppBar extends React.Component {
       >
         <MenuItem onClick={this.handleMobileMenuClose}>
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
+              <Chat/>
           </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <Mail />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
+          <p>Forum</p>
         </MenuItem>
         <MenuItem onClick={this.handleProfileMenuOpen}>
           <IconButton color="inherit">
-            <AccountCircle />
+            <Webcam />
           </IconButton>
-          <p>Profile</p>
+          <p>Camera</p>
         </MenuItem>
       </Menu>
     );
-
     return (
       <MuiThemeProvider theme={theme}>
       <div className={classes.root}>
        <AppBar position="static">
           <Toolbar>
-
+            {/* <Router>
+              <Navigation/>
+            </Router> */}
           <div id="drawer">
-          <MenuButton iconType={MenuIcon} items={['Forums','Your Gallery', 'TO ADD']}/>
+          <MenuButton iconType={MenuIcon} items={['add', 'to', 'navi']}/>
             </div>
             
             <Typography className={classes.title} variant="h6" noWrap >
@@ -223,7 +220,7 @@ class PrimarySearchAppBar extends React.Component {
 
              <div className={classes.NavBanner}>
              <Router>
-             <marquee><Link to={ROUTES.LANDING}><img src={Banner} style={styles.NavBanner} width="450px"height="75px" padding-top="25px"></img></Link></marquee>{/* eslint-disable-line */}             
+             <marquee><a href={ROUTES.LANDING}><img src={Banner} style={styles.NavBanner} width="450px"height="75px" padding-top="25px"></img></a></marquee>{/* eslint-disable-line */}             
              </Router>
               </div>
               
@@ -232,12 +229,19 @@ class PrimarySearchAppBar extends React.Component {
             <div className={classes.sectionDesktop}>
             <div className={classes.mail}>
               <IconButton color="secondary">
-                {/* <Badge badgeContent={'small text'} color="secondary"> */}
-                  <Mail />
-                {/* </Badge> */}
+              {/*IconButton color="secondary">
+                <a href={ROUTES.ACCOUNT}>
+                <Chat/> Account
+                </a>
+                </IconButton> */}
+                  <Chat/>
                 </IconButton></div>
 
-              <div className={classes.account}><IconButton color="secondary" ><AccountCircle onClick={SwitchToLogin}/></IconButton></div>
+              <div className={classes.account}>
+              <IconButton color="secondary" >
+              <Webcam />
+              </IconButton>
+              </div>
 
         </div>
             <div className={classes.sectionMobile}>

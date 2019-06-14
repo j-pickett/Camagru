@@ -1,6 +1,4 @@
 import React from 'react';
-import Gallery from './components/gallery/gallery';
-import Webcam from './components/webcam/webcam';
 import Taskbar from './components/taskbar/taskbar';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -20,6 +18,8 @@ import { withAuthentication } from './components/session';
 /*import LoginPage from './components/taskbar/login';
 import SignupPage from './components/taskbar/signup';
 import { withFirebase } from './components/firebase';
+import Gallery from './components/gallery';
+import Webcam from './components/webcam/webcam';
  */
 
 const styles = {
@@ -89,16 +89,16 @@ const App = () => {
           </div>
         </Router>
 
-        <div style={styles.gallery}>
+        {/* <div style={styles.gallery}>
       <Gallery>
       </Gallery>
-      </div>
+      </div> */}
 
       </header>
 
-        <div style={styles.webcam}>
+        {/* <div style={styles.webcam}>
       <Webcam />
-      </div>
+      </div> */}
       <div style={styles.footer}>
       <MyFooter/>
       </div>

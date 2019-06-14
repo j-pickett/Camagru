@@ -1,12 +1,34 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-
+import Webcam from '../webcam/webcam';
+import Gallery from '../gallery';
+import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 import {
   AuthUserContext,
   withAuthorization,
   withEmailVerification,
 } from '../session';
 import { withFirebase } from '../firebase';
+
+const styles = {
+  webcam: {
+    height: '50%',
+  },
+  paper: {
+    //margin: theme.spacing(8, 4),
+    display: 'flex',
+    flexDirection: 'column',
+	alignItems: 'center',
+	backgroundColor: 'transparent',
+	boxShadow: 'none',
+  },
+  gallery: {
+    paddingBottom: 25,
+    paddingTop: 25,
+  },
+};
 
 class HomePage extends Component {
   constructor(props) {
@@ -125,15 +147,14 @@ class MessagesBase extends Component {
   render() {
     const { users } = this.props;
     const { text, messages, loading } = this.state;
-
     return (
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
             {!loading && messages && (
-              <button type="button" onClick={this.onNextPage}>
+              <Button type="button" onClick={this.onNextPage}>
                 More
-              </button>
+              </Button>
             )}
 
             {loading && <div>Loading ...</div>}
@@ -158,14 +179,21 @@ class MessagesBase extends Component {
                 this.onCreateMessage(event, authUser)
               }
             >
-              <input
+              <Input
                 type="text"
                 value={text}
                 onChange={this.onChangeText}
               />
-              <button type="submit">Send</button>
+              <Button type="submit">Send</Button>
             </form>
+      <div style={styles.gallery}>
+      <Gallery />
+      </div>
+      <div style={styles.webcam}>
+      <Webcam />
+      </div> 
           </div>
+          
         )}
       </AuthUserContext.Consumer>
     );
@@ -177,7 +205,7 @@ const MessageList = ({
   onEditMessage,
   onRemoveMessage,
 }) => (
-  <ul>
+  <ul style={{ listStyleType: "none" }}>
     {messages.map(message => (
       <MessageItem
         key={message.uid}
@@ -239,20 +267,20 @@ class MessageItem extends Component {
 
         {editMode ? (
           <span>
-            <button onClick={this.onSaveEditText}>Save</button>
-            <button onClick={this.onToggleEditMode}>Reset</button>
+            <Button onClick={this.onSaveEditText}>Save</Button>
+            <Button onClick={this.onToggleEditMode}>Reset</Button>
           </span>
         ) : (
-          <button onClick={this.onToggleEditMode}>Edit</button>
+          <Button onClick={this.onToggleEditMode}>Edit</Button>
         )}
 
         {!editMode && (
-          <button
+          <Button
             type="button"
             onClick={() => onRemoveMessage(message.uid)}
           >
             Delete
-          </button>
+          </Button>
         )}
       </li>
     );

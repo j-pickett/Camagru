@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-
+import Button from '@material-ui/core/Button';
 import {
   AuthUserContext,
   withAuthorization,
@@ -97,7 +97,7 @@ class LoginManagementBase extends Component {
     return (
       <div>
         Sign In Methods:
-        <ul>
+        <ul style={{ listStyleType: "none" }}>
           {SIGN_IN_METHODS.map(signInMethod => {
             const onlyOneLeft = activeSignInMethods.length === 1;
             const isEnabled = activeSignInMethods.includes(
@@ -141,20 +141,20 @@ const SocialLoginToggle = ({
   onUnlink,
 }) =>
   isEnabled ? (
-    <button
+    <Button
       type="button"
       onClick={() => onUnlink(signInMethod.id)}
       disabled={onlyOneLeft}
     >
       Deactivate {signInMethod.id}
-    </button>
+    </Button>
   ) : (
-    <button
+    <Button
       type="button"
       onClick={() => onLink(signInMethod.provider)}
     >
       Link {signInMethod.id}
-    </button>
+    </Button>
   );
 
 class DefaultLoginToggle extends Component {
@@ -189,13 +189,13 @@ class DefaultLoginToggle extends Component {
       passwordOne !== passwordTwo || passwordOne === '';
 
     return isEnabled ? (
-      <button
+      <Button
         type="button"
         onClick={() => onUnlink(signInMethod.id)}
         disabled={onlyOneLeft}
       >
         Deactivate {signInMethod.id}
-      </button>
+      </Button>
     ) : (
       <form onSubmit={this.onSubmit}>
         <input
@@ -213,9 +213,9 @@ class DefaultLoginToggle extends Component {
           placeholder="Confirm New Password"
         />
 
-        <button disabled={isInvalid} type="submit">
+        <Button disabled={isInvalid} type="submit">
           Link {signInMethod.id}
-        </button>
+        </Button>
       </form>
     );
   }
