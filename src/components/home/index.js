@@ -3,16 +3,34 @@ import { compose } from 'recompose';
 import Webcam from '../webcam/webcam';
 import Gallery from '../gallery';
 import TextField from '@material-ui/core/TextField';
-import Input from '@material-ui/core/Input';
+import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import Paper from '@material-ui/core/Paper';
 import {
   AuthUserContext,
   withAuthorization,
   withEmailVerification,
 } from '../session';
 import { withFirebase } from '../firebase';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
-const styles = {
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#2c387e',
+    },
+    secondary: {
+        main: '#33eaff',
+    }
+},
+});
+
+
+const styles = theme => ({
+  root: {
+    padding: theme.spacing(3, 2),
+  },
   webcam: {
     height: '50%',
   },
@@ -22,13 +40,15 @@ const styles = {
     flexDirection: 'column',
 	alignItems: 'center',
 	backgroundColor: 'transparent',
-	boxShadow: 'none',
+  boxShadow: 'border',
+  [theme.breakpoints.up('md')]: {
+  },
   },
   gallery: {
     paddingBottom: 25,
     paddingTop: 25,
   },
-};
+});
 
 class HomePage extends Component {
   constructor(props) {
@@ -152,7 +172,7 @@ class MessagesBase extends Component {
         {authUser => (
           <div>
             {!loading && messages && (
-              <Button type="button" onClick={this.onNextPage}>
+              <Button type="button" variant="contained" color="primary" onClick={this.onNextPage}>
                 More
               </Button>
             )}
@@ -179,19 +199,13 @@ class MessagesBase extends Component {
                 this.onCreateMessage(event, authUser)
               }
             >
-              <Input
+               <InputBase
                 type="text"
                 value={text}
-                onChange={this.onChangeText}
-              />
-              <Button type="submit">Send</Button>
+                onChange={this.onChangeText}>
+                </InputBase>
+             <Button variant="contained" color="primary" type="submit">Send</Button>
             </form>
-      <div style={styles.gallery}>
-      <Gallery />
-      </div>
-      <div style={styles.webcam}>
-      <Webcam />
-      </div> 
           </div>
           
         )}
@@ -251,11 +265,13 @@ class MessageItem extends Component {
     return (
       <li>
         {editMode ? (
-          <input
+          <Paper>
+          <InputBase
             type="text"
             value={editText}
             onChange={this.onChangeEditText}
           />
+          </Paper>
         ) : (
           <span>
             <strong>
@@ -267,15 +283,15 @@ class MessageItem extends Component {
 
         {editMode ? (
           <span>
-            <Button onClick={this.onSaveEditText}>Save</Button>
-            <Button onClick={this.onToggleEditMode}>Reset</Button>
+            <Button variant="contained" color="primary" onClick={this.onSaveEditText}>Save</Button>
+            <Button variant="contained" color="primary" onClick={this.onToggleEditMode}>Reset</Button>
           </span>
         ) : (
-          <Button onClick={this.onToggleEditMode}>Edit</Button>
+          <Button variant="contained" color="primary" onClick={this.onToggleEditMode}>Edit</Button>
         )}
 
         {!editMode && (
-          <Button
+          <Button variant="contained" color="primary"
             type="button"
             onClick={() => onRemoveMessage(message.uid)}
           >

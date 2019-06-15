@@ -105,7 +105,7 @@ const styles = theme => ({
     width: '100%',
     color: '#33eaff',
     [theme.breakpoints.up('md')]: {
-      width: 200,
+      width: 20,
     },
   },
   sectionDesktop: {
@@ -195,11 +195,8 @@ class PrimarySearchAppBar extends React.Component {
       <div className={classes.root}>
        <AppBar position="static">
           <Toolbar>
-            {/* <Router>
-              <Navigation/>
-            </Router> */}
           <div id="drawer">
-          <MenuButton iconType={MenuIcon} items={['add', 'to', 'navi']}/>
+          <MenuButton iconType={MenuIcon} items={[<Navigation/>]}/>
             </div>
             
             <Typography className={classes.title} variant="h6" noWrap >

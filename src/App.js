@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import MyFooter from './components/cover_image/footer';
 import Navigation from './components/navigation';
+import LandingPage from './components/landing';
 import AccountPage from './components/account';
  import {
   BrowserRouter as Router,
@@ -14,12 +15,12 @@ import HomePage from './components/home';
 import * as ROUTES from './components/constants/routes';
 import SignInPage from './components/signin';
 import AdminPage from './components/admin';
+import Gallery from './components/gallery';
+import Webcam from './components/webcam/webcam';
 import { withAuthentication } from './components/session';
 /*import LoginPage from './components/taskbar/login';
 import SignupPage from './components/taskbar/signup';
 import { withFirebase } from './components/firebase';
-import Gallery from './components/gallery';
-import Webcam from './components/webcam/webcam';
  */
 
 const styles = {
@@ -73,15 +74,15 @@ const App = () => {
     <div style={styles.container}>
       <header style={styles.header}>
 
-      
+      <Router>
       <div style={styles.taskbar}>
       <Taskbar />
       </div>
 
-      <Router>
+      
           <div>
-          <Navigation/>
             <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
+            <Route exact path={ROUTES.LANDING} component={LandingPage} />
             <Route exact path={ROUTES.HOME} component={HomePage} />
             <Route exact path={ROUTES.ADMIN} component={AdminPage} />
             <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
@@ -96,7 +97,7 @@ const App = () => {
 
       </header>
 
-        {/* <div style={styles.webcam}>
+         {/* <div style={styles.webcam}>
       <Webcam />
       </div> */}
       <div style={styles.footer}>
