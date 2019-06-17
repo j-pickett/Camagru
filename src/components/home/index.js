@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import Webcam from '../webcam/webcam';
-import Gallery from '../gallery';
-import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import Paper from '@material-ui/core/Paper';
 import {
   AuthUserContext,
@@ -14,8 +10,23 @@ import {
 } from '../session';
 import { withFirebase } from '../firebase';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
-const theme = createMuiTheme({
+const styles = {
+  messages: {
+    width: "70%",
+    position: "center",
+    margin: "auto",
+  },
+  card: {
+    margin: "auto",
+  width: "20%",
+  position: "center",
+  }
+};
+
+ const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#2c387e',
@@ -24,30 +35,6 @@ const theme = createMuiTheme({
         main: '#33eaff',
     }
 },
-});
-
-
-const styles = theme => ({
-  root: {
-    padding: theme.spacing(3, 2),
-  },
-  webcam: {
-    height: '50%',
-  },
-  paper: {
-    //margin: theme.spacing(8, 4),
-    display: 'flex',
-    flexDirection: 'column',
-	alignItems: 'center',
-	backgroundColor: 'transparent',
-  boxShadow: 'border',
-  [theme.breakpoints.up('md')]: {
-  },
-  },
-  gallery: {
-    paddingBottom: 25,
-    paddingTop: 25,
-  },
 });
 
 class HomePage extends Component {
@@ -168,17 +155,25 @@ class MessagesBase extends Component {
     const { users } = this.props;
     const { text, messages, loading } = this.state;
     return (
+      <MuiThemeProvider theme={theme}>
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
             {!loading && messages && (
-              <Button type="button" variant="contained" color="primary" onClick={this.onNextPage}>
+              <Button type="button" variant="contained" color="secondary" onClick={this.onNextPage}>
                 More
               </Button>
             )}
 
             {loading && <div>Loading ...</div>}
 
+            <div style={styles.messages}>
+            <Card
+        display="flex"
+        rounded="true"
+        
+        >
+        <CardContent>
             {messages && (
               <MessageList
                 messages={messages.map(message => ({
@@ -191,25 +186,36 @@ class MessagesBase extends Component {
                 onRemoveMessage={this.onRemoveMessage}
               />
             )}
-
             {!messages && <div>There are no messages ...</div>}
-
+            </CardContent>
+        </Card>
+        </div>
+        <br/>
             <form
               onSubmit={event =>
                 this.onCreateMessage(event, authUser)
               }
             >
+              <div style={styles.card}>
+              <Card>
+              <CardContent>
                <InputBase
+               placeholder="type a message"
                 type="text"
                 value={text}
                 onChange={this.onChangeText}>
                 </InputBase>
-             <Button variant="contained" color="primary" type="submit">Send</Button>
+             <Button variant="contained" color="secondary" type="submit">Send</Button>
+             </CardContent>
+            </Card>
+            </div>
             </form>
+            <br/>
           </div>
           
         )}
       </AuthUserContext.Consumer>
+      </MuiThemeProvider>
     );
   }
 }

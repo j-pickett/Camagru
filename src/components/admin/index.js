@@ -1,23 +1,36 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import { compose } from 'recompose';
-
 import { withFirebase } from '../firebase';
 import { withAuthorization, withEmailVerification } from '../session';
 import * as ROLES from '../constants/roles';
 import * as ROUTES from '../constants/routes';
-
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 const AdminPage = () => (
   <div>
-    <h1>Admin</h1>
-    <p>The Admin Page is accessible by every signed in admin user.</p>
-
+    <h1>Admin Page</h1>
     <Switch>
       <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
       <Route exact path={ROUTES.ADMIN} component={UserList} />
     </Switch>
   </div>
 );
+
+const styles = {
+  wrap: {
+    textAlign: "left",
+  },
+  color: {
+    color: "#2c387e",
+  },
+  color2: {
+    color: "#33eaff",
+  },
+  color3: {
+    color: "hotPink",
+  },
+};
 
 class UserListBase extends Component {
   constructor(props) {
@@ -60,30 +73,30 @@ class UserListBase extends Component {
         {loading && <div>Loading ...</div>}
         <ul style={{ listStyleType: "none" }}>
           {users.map(user => (
+            <div style={styles.wrap}>
+              <Card
+        display="flex"
+        rounded="true"
+        >
+        <CardContent>
             <li key={user.uid} >
               <span>
-                <strong>ID:</strong> {user.uid}
+                <strong style={styles.color}>ID:</strong> {user.uid}
               </span>
               <span>
-                <strong>E-Mail:</strong> {user.email}
+                <strong style={styles.color2}> E-Mail:</strong> {user.email}
               </span>
               <span>
-                <strong>Username:</strong> {user.username}
-              </span>
-              <span>
-                <Link
-                  to={{
-                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
-                    state: { user },
-                  }}
-                >
-                  Details
-                </Link>
+                <strong style={styles.color3}> Username:</strong> {user.username}
               </span>
             </li>
+            </CardContent>
+            </Card>
+            </div>
           ))}
         </ul>
-      </div>
+        <br></br>
+        </div>
     );
   }
 }

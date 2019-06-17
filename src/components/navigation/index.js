@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import { AuthUserContext } from '../session';
 import SignOutButton from '../signout';
 import * as ROUTES from '../constants/routes';
@@ -10,9 +9,10 @@ import HTTPS from '@material-ui/icons/Https';
 import Land from '@material-ui/icons/Landscape';
 import Home from '@material-ui/icons/Home';
 import FiberNew from '@material-ui/icons/FiberNew';
+import Exit from '@material-ui/icons/ExitToApp';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import AppBar from '@material-ui/core/AppBar';
-import App from '../../App';
+import MenuItem from '@material-ui/core/MenuItem';
+
 
 const Navigation = () => (
   <AuthUserContext.Consumer>
@@ -27,30 +27,28 @@ const Navigation = () => (
 );
 
 const NavigationAuth = ({ authUser }) => (
-  <ul style={{ listStyleType: "none" }}>
-    <li><IconButton><Link to={ROUTES.LANDING}><Land></Land> Landing</Link></IconButton>
-    </li>
-    <li><IconButton><Link to={ROUTES.HOME}><Home></Home> Home</Link></IconButton>
-    </li>
-    <li><IconButton><Link to={ROUTES.ACCOUNT}><AccountCircle></AccountCircle> Account</Link></IconButton>
-    </li>
+  <div>
+   <MenuItem><Link to={ROUTES.LANDING}><IconButton><Land></Land> Landing</IconButton></Link></MenuItem>
+    
+   <MenuItem><Link to={ROUTES.HOME}><IconButton><Home></Home> Home</IconButton></Link></MenuItem>
+    
+    <MenuItem><Link to={ROUTES.ACCOUNT}><IconButton><AccountCircle></AccountCircle> Account</IconButton></Link></MenuItem>
+    
     {authUser.roles.includes(ROLES.ADMIN) && (
-      <li><IconButton><Link to={ROUTES.ADMIN}><HTTPS></HTTPS> Admin</Link></IconButton>
-      </li>
+    <MenuItem><Link to={ROUTES.ADMIN}><IconButton><HTTPS></HTTPS> Admin</IconButton></Link></MenuItem>
+      
     )}
-    <li>
-      <SignOutButton />
-    </li>
-  </ul>
+   
+   <MenuItem><Exit/><SignOutButton /></MenuItem>
+    </div>
 );
 
 const NavigationNonAuth = () => (
-  <ul style={{ listStyleType: "none" }}>
-    <li><IconButton><Link to={ROUTES.LANDING}><Land></Land> Landing</Link></IconButton>
-    </li>
-    <li><IconButton><Link to={ROUTES.SIGN_IN}><FiberNew></FiberNew>Sign In</Link></IconButton>
-    </li>
-  </ul>
+  <div>
+    <MenuItem><IconButton><Link to={ROUTES.LANDING}><Land></Land> Landing</Link></IconButton></MenuItem>
+    
+    <MenuItem><IconButton><Link to={ROUTES.SIGN_IN}><FiberNew></FiberNew>Sign In</Link></IconButton></MenuItem>
+  </div>
 );
 
 export default Navigation;

@@ -1,12 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import Input from '@material-ui/core/Input';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(3, 2),
-    maxWidth: 100
+    padding: theme.spacing(1, 1),
+    maxWidth: 200
   }
 }));
 
@@ -16,8 +16,7 @@ export default function PaperSheet() {
   return (
     <div>
       <Paper className={classes.root}>
-        <Typography variant="h5" component="h3">
-        </Typography>
+        <Input></Input>
       </Paper>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-
+import { PasswordForgetForm } from '../passwordforgot';
 import { SignUpLink } from '../signup';
 import { PasswordForgetLink } from '../passwordforgot';
 import { withFirebase } from '../firebase';
@@ -14,7 +14,7 @@ const SignInPage = () => (
     <SignInGoogle />
     <SignInFacebook />
     <SignInTwitter />
-    <PasswordForgetLink />
+    <PasswordForgetLink > <PasswordForgetForm/> </PasswordForgetLink>
     <SignUpLink />
   </div>
 );

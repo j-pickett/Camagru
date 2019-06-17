@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../constants/routes';
 import Input from '@material-ui/core/Input';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 const PasswordForgetPage = () => (
   <div>
@@ -11,6 +13,20 @@ const PasswordForgetPage = () => (
     <PasswordForgetForm />
   </div>
 );
+
+const styles = {
+  wrap: {
+    maxWidth: 600,
+    minWidth: 500,
+
+  },
+  card: {
+    margin: "auto",
+  width: "0%",
+  border: "3px solid green",
+  position: "center",
+  }
+};
 
 const INITIAL_STATE = {
   email: '',
@@ -50,6 +66,14 @@ class PasswordForgetFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
+
+        <div style={styles.card}>
+        <div style={styles.wrap}>
+        <Card
+        display="flex"
+        rounded="true"
+        >
+        <CardContent>
         <Input
           name="email"
           value={this.state.email}
@@ -57,9 +81,17 @@ class PasswordForgetFormBase extends Component {
           type="text"
           placeholder="Email Address"
         />
-        <Button disabled={isInvalid} type="submit">
+        <Button 
+        disabled={isInvalid} type="submit"
+        variant="contained"
+        color="primary"
+        >
           Reset My Password
         </Button>
+        </CardContent>
+        </Card>
+        </div>
+        </div>
 
         {error && <p>{error.message}</p>}
       </form>

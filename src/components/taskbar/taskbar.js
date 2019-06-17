@@ -5,29 +5,21 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import MailIcon from '@material-ui/icons/Mail';
 import Webcam from '@material-ui/icons/Videocam';
 import Chat from '@material-ui/icons/Forum';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Banner from '../images/Camagru.png';
 import MenuButton from './menu';
-/* import SignUp from '../signup';
-import Mail from '@material-ui/icons/Mail';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ReactDOM from 'react-dom';*/
-import { Link } from 'react-router-dom';
 import Navigation from '../navigation';
 import * as ROUTES from '../constants/routes';
 import {
   BrowserRouter as Router,
-  //Route,
 } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 

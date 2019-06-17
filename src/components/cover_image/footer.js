@@ -4,8 +4,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-/* import ArrowUpward from '@material-ui/icons/VerticalAlignTop';
-import IconButton from '@material-ui/core/IconButton'; */
 import {
   faYoutube,
   faLinkedin,
@@ -18,7 +16,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
-    maxHeight: '50',
     bottom: 0,
     paddingTop: 20,
     positon: "absolute",
@@ -51,19 +48,13 @@ const useStyles = makeStyles(theme => ({
   socialNav: {
     display: 'table',
     margin: '0 auto',
+    height: '50',
   },
   li: {
     float: 'left',
     padding: 15,
     
   },
-  TopButton: {
-    float: 'right',
-    paddingLeft: 100,
-  },
-  Top: {
-    color: "#E20CFF",
-  }
 }));
 
 const cyan = { color: '#33eaff'};
@@ -102,11 +93,6 @@ export default function StickyFooter() {
             </a>
           </li>
           </ul>
-          {/*<div className={classes.TopButton}>
-           <IconButton className={classes.Top}>
-            <ArrowUpward/>
-          </IconButton> 
-          </div>*/}
           </div>
         </Container>
       </footer>

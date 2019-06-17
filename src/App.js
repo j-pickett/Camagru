@@ -3,7 +3,6 @@ import Taskbar from './components/taskbar/taskbar';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import MyFooter from './components/cover_image/footer';
-import Navigation from './components/navigation';
 import LandingPage from './components/landing';
 import AccountPage from './components/account';
  import {
@@ -15,13 +14,7 @@ import HomePage from './components/home';
 import * as ROUTES from './components/constants/routes';
 import SignInPage from './components/signin';
 import AdminPage from './components/admin';
-import Gallery from './components/gallery';
-import Webcam from './components/webcam/webcam';
 import { withAuthentication } from './components/session';
-/*import LoginPage from './components/taskbar/login';
-import SignupPage from './components/taskbar/signup';
-import { withFirebase } from './components/firebase';
- */
 
 const styles = {
   container: {
@@ -65,7 +58,7 @@ const styles = {
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: 60,
+    height: 30,
   }
 }
 
@@ -89,17 +82,7 @@ const App = () => {
             <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
           </div>
         </Router>
-
-        {/* <div style={styles.gallery}>
-      <Gallery>
-      </Gallery>
-      </div> */}
-
       </header>
-
-         {/* <div style={styles.webcam}>
-      <Webcam />
-      </div> */}
       <div style={styles.footer}>
       <MyFooter/>
       </div>

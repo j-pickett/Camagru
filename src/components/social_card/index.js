@@ -1,3 +1,3 @@
-import Card from './social_card';
+import Card from './card';
 
 export default Card;

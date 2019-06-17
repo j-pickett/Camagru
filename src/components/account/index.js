@@ -9,7 +9,18 @@ import {
 import { withFirebase } from '../firebase';
 import { PasswordForgetForm } from '../passwordforgot';
 import PasswordChangeForm from '../passwordchange';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+ const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#2c387e',
+    },
+    secondary: {
+        main: '#33eaff',
+    }
+},
+});
 const SIGN_IN_METHODS = [
   {
     id: 'password',
@@ -29,18 +40,42 @@ const SIGN_IN_METHODS = [
   },
 ];
 
-const AccountPage = () => (
-  <AuthUserContext.Consumer>
+const styles = {
+  list: {
+    listStyleType: "none",
+  },
+  passwordreset: {
+    //width: "50%",
+    center: 0,
+    float: "left",
+    paddingBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    
+  },
+}
+
+
+
+function AccountPage() {
+  return (
+    <MuiThemeProvider theme={theme}>
+    <AuthUserContext.Consumer>
     {authUser => (
       <div>
         <h1>Account: {authUser.email}</h1>
-        <PasswordForgetForm />
-        <PasswordChangeForm />
+        <h2>Here you can manage your password and link other accounts.</h2>
+        <div style={styles.passwordreset}>
+        <PasswordForgetForm style={styles.passwordreset}/>
+        <PasswordChangeForm style={styles.passwordchange}/>
+        </div>
         <LoginManagement authUser={authUser} />
       </div>
     )}
   </AuthUserContext.Consumer>
-);
+  </MuiThemeProvider>
+  );
+};
 
 class LoginManagementBase extends Component {
   constructor(props) {
@@ -96,8 +131,7 @@ class LoginManagementBase extends Component {
 
     return (
       <div>
-        Sign In Methods:
-        <ul style={{ listStyleType: "none" }}>
+        <ul style={styles.list}>
           {SIGN_IN_METHODS.map(signInMethod => {
             const onlyOneLeft = activeSignInMethods.length === 1;
             const isEnabled = activeSignInMethods.includes(
@@ -105,7 +139,7 @@ class LoginManagementBase extends Component {
             );
 
             return (
-              <li key={signInMethod.id}>
+              <li style={styles.list} key={signInMethod.id}>
                 {signInMethod.id === 'password' ? (
                   <DefaultLoginToggle
                     onlyOneLeft={onlyOneLeft}
@@ -142,6 +176,9 @@ const SocialLoginToggle = ({
 }) =>
   isEnabled ? (
     <Button
+    variant="contained"
+    color="primary"
+      textColor="primary"
       type="button"
       onClick={() => onUnlink(signInMethod.id)}
       disabled={onlyOneLeft}
@@ -150,6 +187,8 @@ const SocialLoginToggle = ({
     </Button>
   ) : (
     <Button
+    variant="contained"
+        color="primary"
       type="button"
       onClick={() => onLink(signInMethod.provider)}
     >
@@ -190,6 +229,8 @@ class DefaultLoginToggle extends Component {
 
     return isEnabled ? (
       <Button
+      variant="contained"
+        color="primary"
         type="button"
         onClick={() => onUnlink(signInMethod.id)}
         disabled={onlyOneLeft}
@@ -213,7 +254,10 @@ class DefaultLoginToggle extends Component {
           placeholder="Confirm New Password"
         />
 
-        <Button disabled={isInvalid} type="submit">
+        <Button
+        variant="contained"
+        color="primary"
+         disabled={isInvalid} type="submit">
           Link {signInMethod.id}
         </Button>
       </form>
