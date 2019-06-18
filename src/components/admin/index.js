@@ -20,6 +20,8 @@ const AdminPage = () => (
 const styles = {
   wrap: {
     textAlign: "left",
+    width: "95%",
+    margin: 'auto',
   },
   color: {
     color: "#2c387e",

@@ -44,8 +44,14 @@ const styles = {
   list: {
     listStyleType: "none",
   },
+  button: {
+    padding: 10,
+    width: "15%",
+  },
+  card: {
+    paddingBottom: 10,
+  },
   passwordreset: {
-    //width: "50%",
     center: 0,
     float: "left",
     paddingBottom: 10,
@@ -175,7 +181,9 @@ const SocialLoginToggle = ({
   onUnlink,
 }) =>
   isEnabled ? (
-    <Button
+    <div style={styles.card}>
+      <Button
+      style={styles.button}
     variant="contained"
     color="primary"
       textColor="primary"
@@ -183,10 +191,13 @@ const SocialLoginToggle = ({
       onClick={() => onUnlink(signInMethod.id)}
       disabled={onlyOneLeft}
     >
-      Deactivate {signInMethod.id}
+      Un-link {signInMethod.id}
     </Button>
+    </div>
   ) : (
-    <Button
+    <div style={styles.card}>
+      <Button
+      style={styles.button}
     variant="contained"
         color="primary"
       type="button"
@@ -194,6 +205,7 @@ const SocialLoginToggle = ({
     >
       Link {signInMethod.id}
     </Button>
+    </div>
   );
 
 class DefaultLoginToggle extends Component {
@@ -228,7 +240,9 @@ class DefaultLoginToggle extends Component {
       passwordOne !== passwordTwo || passwordOne === '';
 
     return isEnabled ? (
-      <Button
+      <div style={styles.card}>
+      {/* <Button
+      style={styles.button}
       variant="contained"
         color="primary"
         type="button"
@@ -236,7 +250,8 @@ class DefaultLoginToggle extends Component {
         disabled={onlyOneLeft}
       >
         Deactivate {signInMethod.id}
-      </Button>
+      </Button> */}
+      </div>
     ) : (
       <form onSubmit={this.onSubmit}>
         <input
@@ -255,6 +270,7 @@ class DefaultLoginToggle extends Component {
         />
 
         <Button
+        style={styles.button}
         variant="contained"
         color="primary"
          disabled={isInvalid} type="submit">

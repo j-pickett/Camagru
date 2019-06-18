@@ -23,7 +23,6 @@ const styles = {
   card: {
     margin: "auto",
   width: "0%",
-  border: "3px solid green",
   position: "center",
   }
 };

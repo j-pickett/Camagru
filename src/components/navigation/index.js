@@ -11,7 +11,7 @@ import Home from '@material-ui/icons/Home';
 import FiberNew from '@material-ui/icons/FiberNew';
 import Exit from '@material-ui/icons/ExitToApp';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 
 
 const Navigation = () => (
@@ -28,26 +28,26 @@ const Navigation = () => (
 
 const NavigationAuth = ({ authUser }) => (
   <div>
-   <MenuItem><Link to={ROUTES.LANDING}><IconButton><Land></Land> Landing</IconButton></Link></MenuItem>
+   <MenuList disableGutters="true"><Link style={{ textDecoration: 'none' }} to={ROUTES.LANDING}><IconButton><Land></Land> Landing</IconButton></Link></MenuList>
     
-   <MenuItem><Link to={ROUTES.HOME}><IconButton><Home></Home> Home</IconButton></Link></MenuItem>
+   <MenuList disableGutters="true"><Link style={{ textDecoration: 'none' }} to={ROUTES.HOME}><IconButton><Home></Home> Home</IconButton></Link></MenuList>
     
-    <MenuItem><Link to={ROUTES.ACCOUNT}><IconButton><AccountCircle></AccountCircle> Account</IconButton></Link></MenuItem>
+    <MenuList disableGutters="true"><Link style={{ textDecoration: 'none' }} to={ROUTES.ACCOUNT}><IconButton><AccountCircle></AccountCircle> Account</IconButton></Link></MenuList>
     
     {authUser.roles.includes(ROLES.ADMIN) && (
-    <MenuItem><Link to={ROUTES.ADMIN}><IconButton><HTTPS></HTTPS> Admin</IconButton></Link></MenuItem>
+    <MenuList disableGutters="true"><Link style={{ textDecoration: 'none' }} to={ROUTES.ADMIN}><IconButton><HTTPS></HTTPS> Admin</IconButton></Link></MenuList>
       
     )}
    
-   <MenuItem><Exit/><SignOutButton /></MenuItem>
+   <MenuList disableGutters="true"><Exit/><SignOutButton /></MenuList>
     </div>
 );
 
 const NavigationNonAuth = () => (
   <div>
-    <MenuItem><IconButton><Link to={ROUTES.LANDING}><Land></Land> Landing</Link></IconButton></MenuItem>
+    <MenuList disableGutters="true"><IconButton><Link style={{ textDecoration: 'none' }} to={ROUTES.LANDING}><Land></Land> Landing</Link></IconButton></MenuList>
     
-    <MenuItem><IconButton><Link to={ROUTES.SIGN_IN}><FiberNew></FiberNew>Sign In</Link></IconButton></MenuItem>
+    <MenuList disableGutters="true"><IconButton><Link style={{ textDecoration: 'none' }} to={ROUTES.SIGN_IN}><FiberNew></FiberNew>Sign In</Link></IconButton></MenuList>
   </div>
 );
 

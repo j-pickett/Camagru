@@ -178,7 +178,7 @@ class MessagesBase extends Component {
               <MessageList
                 messages={messages.map(message => ({
                   ...message,
-                  user: users
+                  user: users 
                     ? users[message.userId]
                     : { userId: message.userId },
                 }))}
@@ -280,7 +280,7 @@ class MessageItem extends Component {
           </Paper>
         ) : (
           <span>
-            <strong>
+            <strong style={{ color: 'hotPink' }}>
               {message.user.username || message.user.userId}
             </strong>{' '}
             {message.text} {message.editedAt && <span>(Edited)</span>}
