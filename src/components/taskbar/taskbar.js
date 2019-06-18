@@ -11,7 +11,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import Webcam from '@material-ui/icons/Videocam';
+import AccountBox from '@material-ui/icons/AccountBox';
 import Chat from '@material-ui/icons/Forum';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Banner from '../images/Camagru.png';
@@ -22,6 +22,7 @@ import {
   BrowserRouter as Router,
 } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 
  const theme = createMuiTheme({
   palette: {
@@ -176,9 +177,9 @@ class PrimarySearchAppBar extends React.Component {
         </MenuItem>
         <MenuItem onClick={this.handleProfileMenuOpen}>
           <IconButton color="inherit">
-            <Webcam />
+            <AccountBox/>
           </IconButton>
-          <p>Camera</p>
+          <p></p>
         </MenuItem>
       </Menu>
     );
@@ -194,7 +195,7 @@ class PrimarySearchAppBar extends React.Component {
             <Typography className={classes.title} variant="h6" noWrap >
             
             </Typography>
-            <div className={classes.search}>
+            {/* <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -205,7 +206,7 @@ class PrimarySearchAppBar extends React.Component {
                   input: classes.inputInput,
                 }}
               />
-            </div>
+            </div> */}
 
              <div className={classes.NavBanner}>
              <Router>
@@ -216,22 +217,6 @@ class PrimarySearchAppBar extends React.Component {
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-            <div className={classes.mail}>
-              <IconButton color="secondary">
-              {/*IconButton color="secondary">
-                <a href={ROUTES.ACCOUNT}>
-                <Chat/> Account
-                </a>
-                </IconButton> */}
-                  <Chat/>
-                </IconButton></div>
-
-              <div className={classes.account}>
-              <IconButton color="secondary" >
-              <Webcam />
-              </IconButton>
-              </div>
-
         </div>
             <div className={classes.sectionMobile}>
               <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">

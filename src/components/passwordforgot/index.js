@@ -1,30 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../constants/routes';
-import Input from '@material-ui/core/Input';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 
-const PasswordForgetPage = () => (
+function PasswordForgetPage (){
+  return (
   <div>
     <h1>PasswordForget</h1>
     <PasswordForgetForm />
   </div>
-);
-
-const styles = {
-  wrap: {
-    maxWidth: 600,
-    minWidth: 500,
-
-  },
-  card: {
-    margin: "auto",
-  width: "0%",
-  position: "center",
-  }
+  );
 };
 
 const INITIAL_STATE = {
@@ -65,32 +51,16 @@ class PasswordForgetFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-
-        <div style={styles.card}>
-        <div style={styles.wrap}>
-        <Card
-        display="flex"
-        rounded="true"
-        >
-        <CardContent>
-        <Input
+        <input
           name="email"
           value={this.state.email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
-        <Button 
-        disabled={isInvalid} type="submit"
-        variant="contained"
-        color="primary"
-        >
+        <button disabled={isInvalid} type="submit">
           Reset My Password
-        </Button>
-        </CardContent>
-        </Card>
-        </div>
-        </div>
+        </button>
 
         {error && <p>{error.message}</p>}
       </form>

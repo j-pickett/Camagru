@@ -4,10 +4,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../constants/routes';
 import * as ROLES from '../constants/roles';
+import { Input } from '@material-ui/core';
 
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
+    <h1>Sign Up</h1>
     <SignUpForm />
   </div>
 );
@@ -100,28 +101,28 @@ class SignUpFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
+        <Input
           name="username"
           value={username}
           onChange={this.onChange}
           type="text"
           placeholder="Full Name"
         />
-        <input
+        <Input
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
-        <input
+        <Input
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
           type="password"
           placeholder="Password"
         />
-        <input
+        <Input
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
@@ -130,13 +131,14 @@ class SignUpFormBase extends Component {
         />
         <label>
           Admin:
-          <input
+          <Input
             name="isAdmin"
             type="checkbox"
             checked={isAdmin}
             onChange={this.onChangeCheckbox}
           />
         </label>
+        <br></br>
         <button disabled={isInvalid} type="submit">
           Sign Up
         </button>

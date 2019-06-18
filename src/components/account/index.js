@@ -10,6 +10,7 @@ import { withFirebase } from '../firebase';
 import { PasswordForgetForm } from '../passwordforgot';
 import PasswordChangeForm from '../passwordchange';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Input } from '@material-ui/core';
 
  const theme = createMuiTheme({
   palette: {
@@ -21,6 +22,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
     }
 },
 });
+
 const SIGN_IN_METHODS = [
   {
     id: 'password',
@@ -46,7 +48,16 @@ const styles = {
   },
   button: {
     padding: 10,
-    width: "15%",
+    width: "18%",
+    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+      border: 0,
+      borderRadius: 3,
+      boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+      color: 'white',
+      rounded: "true",
+      variant: "contained",
+    color: "primary",
+      textColor: "primary",
   },
   card: {
     paddingBottom: 10,
@@ -125,12 +136,12 @@ class LoginManagementBase extends Component {
       .catch(error => this.setState({ error }));
   };
 
-  onUnlink = providerId => {
+  /* onUnlink = providerId => {
     this.props.firebase.auth.currentUser
       .unlink(providerId)
       .then(this.fetchSignInMethods)
       .catch(error => this.setState({ error }));
-  };
+  }; */
 
   render() {
     const { activeSignInMethods, error } = this.state;
@@ -139,7 +150,7 @@ class LoginManagementBase extends Component {
       <div>
         <ul style={styles.list}>
           {SIGN_IN_METHODS.map(signInMethod => {
-            const onlyOneLeft = activeSignInMethods.length === 1;
+            //const onlyOneLeft = activeSignInMethods.length === 1;
             const isEnabled = activeSignInMethods.includes(
               signInMethod.id,
             );
@@ -148,7 +159,7 @@ class LoginManagementBase extends Component {
               <li style={styles.list} key={signInMethod.id}>
                 {signInMethod.id === 'password' ? (
                   <DefaultLoginToggle
-                    onlyOneLeft={onlyOneLeft}
+                    //onlyOneLeft={onlyOneLeft}
                     isEnabled={isEnabled}
                     signInMethod={signInMethod}
                     onLink={this.onDefaultLoginLink}
@@ -156,7 +167,7 @@ class LoginManagementBase extends Component {
                   />
                 ) : (
                   <SocialLoginToggle
-                    onlyOneLeft={onlyOneLeft}
+                    //onlyOneLeft={onlyOneLeft}
                     isEnabled={isEnabled}
                     signInMethod={signInMethod}
                     onLink={this.onSocialLoginLink}
@@ -228,10 +239,10 @@ class DefaultLoginToggle extends Component {
 
   render() {
     const {
-      onlyOneLeft,
+      //onlyOneLeft,
       isEnabled,
       signInMethod,
-      onUnlink,
+      //onUnlink,
     } = this.props;
 
     const { passwordOne, passwordTwo } = this.state;
@@ -254,14 +265,14 @@ class DefaultLoginToggle extends Component {
       </div>
     ) : (
       <form onSubmit={this.onSubmit}>
-        <input
+        <Input
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
           type="password"
           placeholder="New Password"
         />
-        <input
+        <Input
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}

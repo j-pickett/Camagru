@@ -3,6 +3,8 @@ import { compose } from 'recompose';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
   AuthUserContext,
   withAuthorization,
@@ -23,6 +25,45 @@ const styles = {
     margin: "auto",
   width: "20%",
   position: "center",
+  },
+  delete: {
+    type: "submit",
+    variant: "contained",
+    color: "primary",
+    size: "medium",
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #bb0a1e 90%)',
+    border: '0',
+    borderRadius: '3',
+    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+    color: 'white',
+    rounded: "true",
+    textColor: "primary",
+  },
+  edit: {
+    type: "submit",
+    variant: "contained",
+    color: "primary",
+    size: "medium",
+    background: 'linear-gradient(50deg, #2c387e 20%, #33eaff 80%)',
+    border: '0',
+    borderRadius: '3',
+    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+    color: 'white',
+    rounded: "true",
+    textColor: "primary",
+  },
+  button: {
+    type: "submit",
+    variant: "contained",
+    color: "primary",
+    size: "medium",
+    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+    border: '0',
+    borderRadius: '3',
+    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+    color: 'white',
+    rounded: "true",
+    textColor: "primary",
   }
 };
 
@@ -160,7 +201,7 @@ class MessagesBase extends Component {
         {authUser => (
           <div>
             {!loading && messages && (
-              <Button type="button" variant="contained" color="secondary" onClick={this.onNextPage}>
+              <Button style={styles.button} onClick={this.onNextPage}>
                 More
               </Button>
             )}
@@ -205,7 +246,7 @@ class MessagesBase extends Component {
                 value={text}
                 onChange={this.onChangeText}>
                 </InputBase>
-             <Button variant="contained" color="secondary" type="submit">Send</Button>
+             <Button style={styles.button}>Send</Button>
              </CardContent>
             </Card>
             </div>
@@ -289,19 +330,18 @@ class MessageItem extends Component {
 
         {editMode ? (
           <span>
-            <Button variant="contained" color="primary" onClick={this.onSaveEditText}>Save</Button>
-            <Button variant="contained" color="primary" onClick={this.onToggleEditMode}>Reset</Button>
+            <Button style={styles.button} onClick={this.onSaveEditText}>Save</Button>
+            <Button style={styles.button} onClick={this.onToggleEditMode}>Reset</Button>
           </span>
         ) : (
-          <Button variant="contained" color="primary" onClick={this.onToggleEditMode}>Edit</Button>
+          <Button style={styles.edit} onClick={this.onToggleEditMode}><EditIcon/></Button>
         )}
 
         {!editMode && (
-          <Button variant="contained" color="primary"
-            type="button"
+          <Button style={styles.delete}
             onClick={() => onRemoveMessage(message.uid)}
           >
-            Delete
+            <DeleteIcon/>
           </Button>
         )}
       </li>

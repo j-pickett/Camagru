@@ -28,18 +28,18 @@ const Navigation = () => (
 
 const NavigationAuth = ({ authUser }) => (
   <div>
-   <MenuList disableGutters="true"><Link style={{ textDecoration: 'none' }} to={ROUTES.LANDING}><IconButton><Land></Land> Landing</IconButton></Link></MenuList>
+   <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.LANDING}><IconButton><Land></Land> Landing</IconButton></Link></MenuList>
     
-   <MenuList disableGutters="true"><Link style={{ textDecoration: 'none' }} to={ROUTES.HOME}><IconButton><Home></Home> Home</IconButton></Link></MenuList>
+   <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.HOME}><IconButton><Home></Home> Home</IconButton></Link></MenuList>
     
-    <MenuList disableGutters="true"><Link style={{ textDecoration: 'none' }} to={ROUTES.ACCOUNT}><IconButton><AccountCircle></AccountCircle> Account</IconButton></Link></MenuList>
+    <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.ACCOUNT}><IconButton><AccountCircle></AccountCircle> Account</IconButton></Link></MenuList>
     
     {authUser.roles.includes(ROLES.ADMIN) && (
-    <MenuList disableGutters="true"><Link style={{ textDecoration: 'none' }} to={ROUTES.ADMIN}><IconButton><HTTPS></HTTPS> Admin</IconButton></Link></MenuList>
+    <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.ADMIN}><IconButton><HTTPS></HTTPS> Admin</IconButton></Link></MenuList>
       
     )}
    
-   <MenuList disableGutters="true"><Exit/><SignOutButton /></MenuList>
+   <MenuList ><Exit/><SignOutButton /></MenuList>
     </div>
 );
 
