@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { withFirebase } from '../firebase';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
@@ -23,7 +21,6 @@ const styles = {
   button: {
     type: "submit",
     variant: "contained",
-    color: "primary",
     size: "medium",
     background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
     border: '0',
@@ -31,9 +28,6 @@ const styles = {
     boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
     color: 'white',
     rounded: "true",
-    variant: "contained",
-    color: "primary",
-    textColor: "primary",
   },
 };
 
@@ -72,11 +66,7 @@ class PasswordChangeForm extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <div style={styles.card}>
         <div style={styles.wrap}>
-        <Card>
-        <CardContent
-        >
           
         <Input
           name="passwordOne"
@@ -96,11 +86,9 @@ class PasswordChangeForm extends Component {
         style={styles.button}
         disabled={isInvalid}
         >
-          Reset My Password
+          Change My Password
         </Button>
-        </CardContent>
-        </Card>
-        </div></div>
+        </div>
 
         {error && <p>{error.message}</p>}
       </form>

@@ -5,13 +5,33 @@ import { withFirebase } from '../firebase';
 import * as ROUTES from '../constants/routes';
 import * as ROLES from '../constants/roles';
 import { Input } from '@material-ui/core';
-
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Button from '@material-ui/core/Button';
 const SignUpPage = () => (
   <div>
     <h1>Sign Up</h1>
     <SignUpForm />
   </div>
 );
+const styles = {
+  card: {
+    width: "60%",
+    margin: "auto",
+  },
+  button: {
+    type: "submit",
+    variant: "contained",
+    size: "medium",
+    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+    border: '0',
+    borderRadius: '3',
+    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+    color: 'white',
+    float: "center",
+    rounded: "true",
+  },
+};
 
 const INITIAL_STATE = {
   username: '',
@@ -100,8 +120,15 @@ class SignUpFormBase extends Component {
       username === '';
 
     return (
+      <Card
+        display="flex"
+        rounded="true"
+        style={styles.card}
+        >
+        <CardContent>
       <form onSubmit={this.onSubmit}>
         <Input
+        style={{ float: "center", width: "20%"}}
           name="username"
           value={username}
           onChange={this.onChange}
@@ -109,6 +136,7 @@ class SignUpFormBase extends Component {
           placeholder="Full Name"
         />
         <Input
+        style={{ float: "center", width: "30%"}}
           name="email"
           value={email}
           onChange={this.onChange}
@@ -116,6 +144,7 @@ class SignUpFormBase extends Component {
           placeholder="Email Address"
         />
         <Input
+        style={{ float: "center", width: "15%"}}
           name="passwordOne"
           value={passwordOne}
           onChange={this.onChange}
@@ -123,15 +152,17 @@ class SignUpFormBase extends Component {
           placeholder="Password"
         />
         <Input
+        style={{ float: "center", width: "15%"}}
           name="passwordTwo"
           value={passwordTwo}
           onChange={this.onChange}
           type="password"
           placeholder="Confirm Password"
         />
-        <label>
+        <label style={{ float: "center", width: "15%"}}>
           Admin:
           <Input
+          style={{ width: "1%", float: "center"}}
             name="isAdmin"
             type="checkbox"
             checked={isAdmin}
@@ -139,12 +170,16 @@ class SignUpFormBase extends Component {
           />
         </label>
         <br></br>
-        <button disabled={isInvalid} type="submit">
+        <Button 
+        style={styles.button}
+        disabled={isInvalid} type="submit">
           Sign Up
-        </button>
+        </Button>
 
         {error && <p>{error.message}</p>}
       </form>
+      </CardContent>
+      </Card>
     );
   }
 }

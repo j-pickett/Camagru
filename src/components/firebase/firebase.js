@@ -70,7 +70,7 @@ doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
 doSendEmailVerification = () =>
 this.auth.currentUser.sendEmailVerification({
-  url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,
+  url: "https://shielded-coast-68814.herokuapp.com",
 });
 
 doPasswordUpdate = password =>

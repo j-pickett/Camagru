@@ -1,21 +1,84 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { PasswordForgetForm } from '../passwordforgot';
 import { SignUpLink } from '../signup';
-import { PasswordForgetLink } from '../passwordforgot';
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../constants/routes';
+import Card from '@material-ui/core/Card';
+import { CardContent, Input } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import { faGoogle, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
+const styles = {
+  wrap: {
+    maxWidth: 600,
+    minWidth: 500,
+  },
+  signup: {
+    margin: "auto",
+    width: "50%",
+    position: "center",
+  },
+  signin: {
+    margin: "auto",
+    width: "50%",
+    position: "center",
+  },
+  icon: {
+    color: '#2c387e',
+  },
+  list: {
+    listStyleType: "none",
+  },
+  button: {
+    padding: 10,
+    margin: "auto",
+    width: "20%",
+    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+      border: 0,
+      borderRadius: 3,
+      boxShadow: '0 3px 5px 2px rgba(44, 56, 126, .3)',
+      color: 'white',
+      rounded: "true",
+      variant: "contained",
+      textColor: "primary",
+  },
+  card: {
+    paddingBottom: 10,
+  },
+  passwordreset: {
+    center: 0,
+    float: "left",
+    paddingBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttons: {
+
+  },
+}
 
 const SignInPage = () => (
   <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <SignInGoogle />
-    <SignInFacebook />
-    <SignInTwitter />
-    <PasswordForgetLink > <PasswordForgetForm/> </PasswordForgetLink>
-    <SignUpLink />
+    <h1>Sign In</h1>
+    <h2>Please make an account, or sign in to continue.</h2>
+    <Card style={styles.signin}>
+      <CardContent>
+      <SignInForm />
+      </CardContent>
+    </Card>
+    <Card style={styles.signup}>
+      <CardContent>
+      <SignUpLink />
+      </CardContent>
+    </Card>
+    <div >
+    <SignInGoogle></SignInGoogle>
+    <SignInFacebook></SignInFacebook>
+    <SignInTwitter></SignInTwitter>
+    </div>
   </div>
 );
 
@@ -68,22 +131,24 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
+      <form onSubmit={this.onSubmit} style={{ float: 'center'}}>
+        <Input
+        style={{ float: 'center', width: "40%"}}
           name="email"
           value={email}
           onChange={this.onChange}
           type="text"
           placeholder="Email Address"
         />
-        <input
+        <Input
+        style={{ float: 'center', width: "40%", }}
           name="password"
           value={password}
           onChange={this.onChange}
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit" onSubmit={this.onSubmit}>
+        <button style={styles.button} disabled={isInvalid} onSubmit={this.onSubmit}>
           Sign In
         </button>
 
@@ -130,9 +195,10 @@ class SignInGoogleBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
-
+      <form onSubmit={this.onSubmit} style={{paddingBottom: 10,}}>
+        <Button style={styles.button}>Sign In with Google
+        <FontAwesomeIcon  style={styles.icon}  size={'2x'} icon={faGoogle}/>
+        </Button>
         {error && <p>{error.message}</p>}
       </form>
     );
@@ -176,8 +242,8 @@ class SignInFacebookBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Facebook</button>
+      <form onSubmit={this.onSubmit} style={{paddingBottom: 10,}}>
+        <Button style={styles.button}>Sign In with Facebook <FontAwesomeIcon  style={styles.icon}  size={'2x'} icon={faFacebook} /></Button>
 
         {error && <p>{error.message}</p>}
       </form>
@@ -223,7 +289,7 @@ class SignInTwitterBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Twitter</button>
+        <Button style={styles.button}>Sign In with Twitter <FontAwesomeIcon style={styles.icon}  size={'2x'} icon={faTwitter}/></Button>
 
         {error && <p>{error.message}</p>}
       </form>

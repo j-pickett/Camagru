@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import { compose } from 'recompose';
-import Button from '@material-ui/core/Button';
 import {
   AuthUserContext,
   withAuthorization,
   withEmailVerification,
 } from '../session';
+import { Button } from '@material-ui/core';
 import { withFirebase } from '../firebase';
 import { PasswordForgetForm } from '../passwordforgot';
 import PasswordChangeForm from '../passwordchange';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { Input } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Grid from '@material-ui/core/Grid';
 
  const theme = createMuiTheme({
   palette: {
@@ -48,27 +51,33 @@ const styles = {
   },
   button: {
     padding: 10,
-    width: "18%",
+    margin: "auto",
+    width: "20%",
     background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
       border: 0,
       borderRadius: 3,
-      boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+      boxShadow: '0 3px 5px 2px rgba(44, 56, 126, .3)',
       color: 'white',
       rounded: "true",
       variant: "contained",
-    color: "primary",
       textColor: "primary",
   },
   card: {
-    paddingBottom: 10,
-  },
-  passwordreset: {
-    center: 0,
-    float: "left",
-    paddingBottom: 10,
+    width: "40%",
     alignItems: "center",
     justifyContent: "center",
-    
+    display: "flex",
+    margin: "auto",
+  },
+  passwordchange: {
+    width: "40%",
+    paddingBottom: 10,
+    margin: "auto",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttons: {
+    paddingBottom: 10,
   },
 }
 
@@ -82,12 +91,21 @@ function AccountPage() {
       <div>
         <h1>Account: {authUser.email}</h1>
         <h2>Here you can manage your password and link other accounts.</h2>
-        <div style={styles.passwordreset}>
-        <PasswordForgetForm style={styles.passwordreset}/>
-        <PasswordChangeForm style={styles.passwordchange}/>
+        <div style={styles.passwordchange}>
+        <PasswordForgetForm />
         </div>
-        <LoginManagement authUser={authUser} />
-      </div>
+        <Card
+        style={styles.card}
+        >
+        <CardContent
+        >
+        <PasswordChangeForm/>
+        </CardContent>
+        </Card>
+        <Grid item md={12} direction="row"> 
+        <LoginManagement style={styles.buttons} authUser={authUser} />
+          </Grid>
+     </div>
     )}
   </AuthUserContext.Consumer>
   </MuiThemeProvider>
@@ -147,7 +165,7 @@ class LoginManagementBase extends Component {
     const { activeSignInMethods, error } = this.state;
 
     return (
-      <div>
+      <div width="40%">
         <ul style={styles.list}>
           {SIGN_IN_METHODS.map(signInMethod => {
             //const onlyOneLeft = activeSignInMethods.length === 1;
@@ -192,13 +210,12 @@ const SocialLoginToggle = ({
   onUnlink,
 }) =>
   isEnabled ? (
-    <div style={styles.card}>
+    <div style={styles.buttons}>
       <Button
       style={styles.button}
     variant="contained"
     color="primary"
       textColor="primary"
-      type="button"
       onClick={() => onUnlink(signInMethod.id)}
       disabled={onlyOneLeft}
     >
@@ -206,12 +223,12 @@ const SocialLoginToggle = ({
     </Button>
     </div>
   ) : (
-    <div style={styles.card}>
+    <div style={styles.buttons}>
       <Button
       style={styles.button}
-    variant="contained"
-        color="primary"
-      type="button"
+      variant="contained"
+      color="primary"
+      type="Button"
       onClick={() => onLink(signInMethod.provider)}
     >
       Link {signInMethod.id}
@@ -256,7 +273,7 @@ class DefaultLoginToggle extends Component {
       style={styles.button}
       variant="contained"
         color="primary"
-        type="button"
+        type="Button"
         onClick={() => onUnlink(signInMethod.id)}
         disabled={onlyOneLeft}
       >
