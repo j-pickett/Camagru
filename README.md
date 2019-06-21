@@ -1,3 +1,26 @@
+Camagru is my React/Firebase/Node project that is meant to be an "instagram clone". The user uploads photos taken with the hardware's camera, and can then post on the site and interact with other users by comments and likes. Although this is still a WIP it is nearly finished. 
+
+Camagru is now hosted on Heroku! Visit it here - https://shielded-coast-68814.herokuapp.com/
+
+Here are some screenshots of what it looks like so far:
+
+
+This is the Sign in page where you will be redirected until you make an account to access the rest of the site's features.
+![](https://i.imgur.com/HJmTQsp.png)
+
+Once signed in you can visit the rest of the site, such as the home page which currently displays the messages of the site ie the forum.
+![](https://i.imgur.com/rCfVlDk.png)
+
+Your account page will allow you to reset/change your password and let you link your social media accounts for faster login.
+![](https://i.imgur.com/rZDfZKp.png)
+
+Finally the landing page where you take your photos with the device's camera and can add stickers to the image then post on the site.
+![](https://i.imgur.com/L4fkBks.png)
+
+There is also an admin page but has sensitive details I don't want to share in a screenshot :)
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
