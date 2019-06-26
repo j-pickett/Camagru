@@ -52,7 +52,7 @@ const styles = {
   button: {
     padding: 10,
     margin: "auto",
-    width: "20%",
+    width: "20vh",
     background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
       border: 0,
       borderRadius: 3,
@@ -63,14 +63,21 @@ const styles = {
       textColor: "primary",
   },
   card: {
-    width: "40%",
+    width: "60vw",
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
+    margin: "auto",
+  },
+  topCard: {
+    width: "60vw",
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
     margin: "auto",
   },
   passwordchange: {
-    width: "40%",
+    width: "60vw",
     paddingBottom: 10,
     margin: "auto",
     alignItems: "center",
@@ -91,8 +98,8 @@ function AccountPage() {
       <div>
         <h1>Account: {authUser.email}</h1>
         <h2>Here you can manage your password and link other accounts.</h2>
-        <div style={styles.passwordchange}>
-        <PasswordForgetForm />
+        <div style={styles.passwordchange} >
+        <PasswordForgetForm style={styles.topCard}/>
         </div>
         <Card
         style={styles.card}

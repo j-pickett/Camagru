@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { withFirebase } from '../firebase';
 import * as ROUTES from '../constants/routes';
 import * as ROLES from '../constants/roles';
@@ -14,7 +14,35 @@ const SignUpPage = () => (
     <SignUpForm />
   </div>
 );
-const styles = {
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#2c387e',
+    },
+    secondary: {
+        main: '#33eaff',
+    }
+},
+});
+
+const styles = theme => ({
+  mobileCard: {
+    width: "60%",
+    margin: "auto",
+  },
+  mobileButton: {
+    type: "submit",
+    variant: "contained",
+    size: "medium",
+    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+    border: '0',
+    borderRadius: '3',
+    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+    color: 'white',
+    float: "center",
+    rounded: "true",
+  },
   card: {
     width: "60%",
     margin: "auto",
@@ -31,7 +59,18 @@ const styles = {
     float: "center",
     rounded: "true",
   },
-};
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
+}});
 
 const INITIAL_STATE = {
   username: '',
@@ -52,12 +91,14 @@ const ERROR_MSG_ACCOUNT_EXISTS = `
   on your personal account page.
 `;
 
-class SignUpFormBase extends Component {
+class SignUpFormBase extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = { ...INITIAL_STATE };
   }
+
+  
 
   onSubmit = event => {
     const { username, email, passwordOne, isAdmin } = this.state;
@@ -104,6 +145,7 @@ class SignUpFormBase extends Component {
   };
 
   render() {
+    /* const { classes } = this.props; */
     const {
       username,
       email,
@@ -119,7 +161,73 @@ class SignUpFormBase extends Component {
       email === '' ||
       username === '';
 
+      const renderMobile = (
+        <MuiThemeProvider theme={theme}>
+            <Card
+              display="flex"
+              rounded="true"
+              style={styles.card}
+              >
+              <CardContent>
+            <form onSubmit={this.onSubmit}>
+              <Input
+              style={{ float: "center", width: "50%"}}
+                name="username"
+                value={username}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Full Name"
+              /><br/>
+              <Input
+              style={{ float: "center", width: "50%"}}
+                name="email"
+                value={email}
+                onChange={this.onChange}
+                type="text"
+                placeholder="Email Address"
+              /><br/>
+              <Input
+              style={{ float: "center", width: "50%"}}
+                name="passwordOne"
+                value={passwordOne}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Password"
+              /><br/>
+              <Input
+              style={{ float: "center", width: "50%"}}
+                name="passwordTwo"
+                value={passwordTwo}
+                onChange={this.onChange}
+                type="password"
+                placeholder="Confirm Password"
+              /><br/>
+              <label style={{ float: "center", width: "50%"}}>
+                Admin:
+                <Input
+                style={{ width: "5%", float: "center"}}
+                  name="isAdmin"
+                  type="checkbox"
+                  checked={isAdmin}
+                  onChange={this.onChangeCheckbox}
+                />
+              </label>
+              <br></br>
+              <Button 
+              style={styles.button}
+              disabled={isInvalid} type="submit">
+                Sign Up
+              </Button>
+      
+              {error && <p>{error.message}</p>}
+            </form>
+            </CardContent>
+            </Card>
+            </MuiThemeProvider>
+      );
+
     return (
+      <MuiThemeProvider theme={theme}>
       <Card
         display="flex"
         rounded="true"
@@ -136,7 +244,7 @@ class SignUpFormBase extends Component {
           placeholder="Full Name"
         />
         <Input
-        style={{ float: "center", width: "30%"}}
+        style={{ float: "center", width: "50%"}}
           name="email"
           value={email}
           onChange={this.onChange}
@@ -180,6 +288,8 @@ class SignUpFormBase extends Component {
       </form>
       </CardContent>
       </Card>
+            {renderMobile}
+      </MuiThemeProvider>
     );
   }
 }

@@ -7,6 +7,7 @@ import * as ROLES from '../constants/roles';
 import * as ROUTES from '../constants/routes';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+/* mobile ready */
 const AdminPage = () => (
   <div>
     <h1>Admin Page</h1>
@@ -73,7 +74,7 @@ class UserListBase extends Component {
       <div>
         <h2>Users</h2>
         {loading && <div>Loading ...</div>}
-        <ul style={{ listStyleType: "none" }}>
+        <ul style={{ listStyleType: "none", paddingLeft: "0", paddingRight: "10px"}}>
           {users.map(user => (
             <div style={styles.wrap}>
               <Card

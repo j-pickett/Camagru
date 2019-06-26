@@ -27,6 +27,13 @@ const styles = {
     float: "center",
     rounded: "true",
   },
+  card: {
+    width: "60vw",
+    alignItems: "center",
+    justifyContent: "center",
+    display: "flex",
+    margin: "auto",
+  },
 };
 
 const INITIAL_STATE = {

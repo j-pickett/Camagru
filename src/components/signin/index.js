@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import { faGoogle, faFacebook, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
+/** signin fixed for mobile*/
 const styles = {
   wrap: {
     maxWidth: 600,
@@ -20,6 +20,7 @@ const styles = {
     margin: "auto",
     width: "50%",
     position: "center",
+    paddingTop: 10,
   },
   signin: {
     margin: "auto",
@@ -35,7 +36,8 @@ const styles = {
   button: {
     padding: 10,
     margin: "auto",
-    width: "20%",
+    //width: "20%", non mobile
+    width: "21vh",
     background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
       border: 0,
       borderRadius: 3,
@@ -47,6 +49,7 @@ const styles = {
   },
   card: {
     paddingBottom: 10,
+    
   },
   passwordreset: {
     center: 0,
@@ -69,11 +72,13 @@ const SignInPage = () => (
       <SignInForm />
       </CardContent>
     </Card>
+    <br/>
     <Card style={styles.signup}>
       <CardContent>
       <SignUpLink />
       </CardContent>
     </Card>
+    <br/>
     <div >
     <SignInGoogle></SignInGoogle>
     <SignInFacebook></SignInFacebook>
@@ -133,7 +138,7 @@ class SignInFormBase extends Component {
     return (
       <form onSubmit={this.onSubmit} style={{ float: 'center'}}>
         <Input
-        style={{ float: 'center', width: "40%"}}
+        style={{ float: 'center', /*width: "30vw" nonmobile*/ width: "39vw"}}
           name="email"
           value={email}
           onChange={this.onChange}
@@ -141,7 +146,7 @@ class SignInFormBase extends Component {
           placeholder="Email Address"
         />
         <Input
-        style={{ float: 'center', width: "40%", }}
+        style={{ float: 'center', width: "39vw", }}
           name="password"
           value={password}
           onChange={this.onChange}

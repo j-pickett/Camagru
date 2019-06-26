@@ -11,7 +11,6 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountBox from '@material-ui/icons/AccountBox';
 import Chat from '@material-ui/icons/Forum';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import Banner from '../images/Camagru.png';
 import MenuButton from './menu';
 import Navigation from '../navigation';
@@ -214,12 +213,8 @@ class PrimarySearchAppBar extends React.Component {
               
 
             <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-        </div>
+            <div className={classes.sectionDesktop}></div>
             <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
             </div>
           </Toolbar>
         </AppBar>

@@ -23,18 +23,42 @@ const styles = theme => ({
       maxHeight: 200,
       maxWidth: 200,
     },
+    mobileRoot: {
+      flexGrow: 1,
+      direction: "row",
+      justify: "center",
+      alignItems:"baseline",
+      size: 'fit',
+      maxHeight: 125,
+      maxWidth: "20vw",
+    },
+    mobileGallery: {
+      size: 'fit',
+      height: 135,
+      width: 500,
+    },
   });
   
   class Gallery extends React.Component {
    render() {
+     const renderMobileGallery = (
+      <div style={styles.mobileRoot}>
+      <Draggable><img src={tty} style={styles.mobileGallery} alt="tty" height="70vh"/></Draggable>
+      <Draggable><img src={parrot} style={styles.mobileGallery} alt="parrot" height="70vh"/></Draggable>
+      <Draggable><img src={hat} style={styles.mobileGallery} alt="hat" height="70vh"/></Draggable>
+      <Draggable><img src={grillz} style={styles.mobileGallery} alt="grillz" height="70vh"/></Draggable>
+      <Draggable><img src={cash} style={styles.mobileGallery} alt="cash" height="70vh"/></Draggable>
+      </div>
+     );
     return (
-        <div style={styles.root}>
-        <Draggable><img src={tty} style={styles.gallery} alt="tty" /*height="120vh"*/ height="90vh"/></Draggable>
-        <Draggable><img src={parrot} style={styles.gallery} alt="parrot" /*height="120vh"*/ height="90vh"/></Draggable>
-        <Draggable><img src={hat} style={styles.gallery} alt="hat" /*height="120vh"*/ height="90vh"/></Draggable>
-        <Draggable><img src={grillz} style={styles.gallery} alt="grillz" /*height="120vh"*/ height="90vh"/></Draggable>
-        <Draggable><img src={cash} style={styles.gallery} alt="cash" /*height="120vh"*/ height="90vh"/></Draggable>
-        </div>
+ <div style={styles.root}>
+   {renderMobileGallery}
+        {/* <Draggable><img src={tty} style={styles.gallery} alt="tty" height="90vh"/></Draggable>
+        <Draggable><img src={parrot} style={styles.gallery} alt="parrot" height="90vh"/></Draggable>
+        <Draggable><img src={hat} style={styles.gallery} alt="hat" height="90vh"/></Draggable>
+        <Draggable><img src={grillz} style={styles.gallery} alt="grillz" height="90vh"/></Draggable>
+        <Draggable><img src={cash} style={styles.gallery} alt="cash" height="90vh"/></Draggable> */}
+    </div>
    )};
 }
 

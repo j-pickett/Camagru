@@ -23,7 +23,7 @@ const styles = {
   },
   card: {
     margin: "auto",
-  width: "20%",
+  width: "20vh",
   position: "center",
   },
   delete: {
@@ -56,8 +56,8 @@ const styles = {
     border: '0',
     boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
     color: 'white',
-    width: "20%",
-    height: "35%",
+    width: "10vh",
+    height: "3vh",
     rounded: "true",
     textColor: "primary",
   }
