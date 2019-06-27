@@ -17,11 +17,25 @@ import Typography from '@material-ui/core/Typography';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import Comment from '@material-ui/icons/Comment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import tty from '../images/tty.png';
+import { Input } from '@material-ui/core';
+
 /* mobile format fixed for landing page*/
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#2c387e',
+    },
+    secondary: {
+        main: '#33eaff',
+    }
+},
+});
+
 const useStyles = makeStyles(theme => ({
   card: {
-    maxWidth: 400,
-    maxHeight: 275,
+    width: "80vw",
+    height: "33vh",
     display: 'inline-block',
   },
   media: {
@@ -39,7 +53,7 @@ const useStyles = makeStyles(theme => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: '#2196F3',
+    background: 'linear-gradient(50deg, #2c387e 20%, #33eaff 80%)',
   },
 }));
 
@@ -50,16 +64,15 @@ const styles = {
         justifyContent: 'space-between',
         width: '100%',
         height: '100%',
-        paddingBottom: '50px',
         right: 0,
-        positon: 'absolute',
-        paddingRight: 40,
+        positon: 'relative',
         display: 'inline-block', 
     },
     Gallery: {
       outline: '5px dotted green',
       maxWidth: '50vw',
       minWidth: '5vw',
+
       position: 'relative',
       align: 'left',
       paddingTop: '50px',
@@ -69,69 +82,54 @@ const styles = {
       maxWidth: '100vw',
       minWidth: '5vw',
       align: 'center',
-      height: "40vh",
-      paddingTop: '50px',
-      positon: 'relative',
+      height: "45vh",
+      positon: 'absolute',
     },
     button: {
-      size: 80,
+      size: 0,
        secondary: {
+        transition: theme.transitions.create('transform', {
+          duration: theme.transitions.duration.shortest,
+        }),
         main: '#33eaff',
         display: 'inline-block',
+        transform: "translate(100px, 100px)",
     }
     }
 
 }
 
- const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#2c387e',
-    },
-    secondary: {
-        main: '#33eaff',
-    }
-},
-});
-
 function SocialCard() {
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
   const classes = useStyles();
-
+  var post = "POST";
   return (
+    <MuiThemeProvider theme={theme}>
     <Card className={classes.card}>
       <CardHeader
         avatar={
-          <Avatar aria-label="Post" className={classes.avatar}>
-            C
+          <Avatar src={tty} className={classes.avatar}>
           </Avatar>
         }
         action={
-          <IconButton aria-label="Settings">
-            <MoreVertIcon />
-          </IconButton>
+          <div>
+        <IconButton>
+          <ThumbUp color="secondary"/>
+        </IconButton>
+        <IconButton >
+          <Comment color="secondary"/>
+        </IconButton></div>
         }
-        title="POSTID"
-        subheader="CURRENT_TIME"
+        title={<Input justifyContent="center" placeholder="YOUR TITLE" disableUnderline="true"/>}
+        subheader={<Input disabled defaultValue={dateTime} disableUnderline="true"/>}
       />
-      <CardMedia
-        className={classes.media}
-        image="/static/images/cards/paella.jpg"
-        title="YOUR POST"
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          COMMENT SECTION
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="Like">
-          <ThumbUp />
-        </IconButton>
-        <IconButton aria-label="Comment">
-          <Comment />
-        </IconButton>
-      </CardActions>
+      <CardMedia src={tty} image={tty} className={classes.media}>
+      </CardMedia>
     </Card>
+    </MuiThemeProvider>
   );
 }
 
@@ -277,10 +275,10 @@ class WebcamCapture extends React.Component {
      showIndex={true}
      showNav={this.state.showNav}
      isRTL={false}
-     showFullscreenButton={this.state.showFullscreenButton}
-     showGalleryFullscreenButton={this.state.showGalleryFullscreenButton}
-     showPlayButton={this.state.showPlayButton}
-     showGalleryPlayButton={this.state.showGalleryPlayButton}
+     showFullscreenButton={false}
+     showGalleryFullscreenButton={false}
+     showPlayButton={false}
+     showGalleryPlayButton={false}
      onSlide={this.onSlideEvent.bind(this)}
      slideDuration={parseInt(this.state.slideDuration)}
      slideInterval={parseInt(this.state.slideInterval)}
@@ -305,11 +303,11 @@ class WebcamCapture extends React.Component {
          screenshotFormat="image/jpeg"
          width={400}
          videoConstraints={videoConstraints}
-       />
+       ></Webcam>
        
-     <div style={styles.button} >
+     <div style={styles.button}>
    <IconButton variant="raised" color="secondary" component="span" onClick={this.capture}>
-     <PhotoCamera/>
+     <PhotoCamera />
    </IconButton>
      </div>
      </div>

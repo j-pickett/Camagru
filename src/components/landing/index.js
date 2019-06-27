@@ -4,8 +4,7 @@ import Webcam from '../webcam/webcam';
 
 const styles = {
     gallery: {
-      paddingBottom: 25,
-      paddingTop: 25,
+      paddingTop: 10,
     },
     webcam: {
       height: '50%',

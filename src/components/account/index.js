@@ -52,7 +52,7 @@ const styles = {
   button: {
     padding: 10,
     margin: "auto",
-    width: "20vh",
+    width: "20vw",
     background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
       border: 0,
       borderRadius: 3,

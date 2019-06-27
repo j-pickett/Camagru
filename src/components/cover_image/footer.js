@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
   footer: {
     padding: theme.spacing(2),
-    marginTop: 'auto',
+    paddingBottom: 0,
     backgroundColor: '#2c387e',
   },
   twitter: {
@@ -75,21 +75,21 @@ export default function StickyFooter() {
           <ul id="social_icons" className={classes.ul}>
           <li className={classes.li}>
           <a href="https://twitter.com/AustinP55381017" className={classes.twitter} data-show-count="false">
-          <FontAwesomeIcon icon={faTwitter} size="3x" /></a>
+          <FontAwesomeIcon icon={faTwitter} size="2x" /></a>
           </li>
           <li className={classes.li}>
             <a href="https://github.com/j-pickett"  style={cyan}>
-            <FontAwesomeIcon icon={faGithub} size="3x" />
+            <FontAwesomeIcon icon={faGithub} size="2x" />
             </a>
           </li>
           <li className={classes.li}>
           <a href="https://www.linkedin.com/in/austin-pickett-999217162/"  style={cyan}>
-          <FontAwesomeIcon icon={faLinkedin} size="3x" />
+          <FontAwesomeIcon icon={faLinkedin} size="2x" />
             </a>
           </li>
           <li className={classes.li}>
           <a href="https://www.youtube.com/channel/UCbo04DtwoZpVNMNOGZWFaWQ"  style={cyan}>
-          <FontAwesomeIcon icon={faYoutube} size="3x" />
+          <FontAwesomeIcon icon={faYoutube} size="2x" />
             </a>
           </li>
           </ul>
