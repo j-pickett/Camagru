@@ -17,17 +17,22 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     bottom: 0,
-    paddingTop: 20,
-    positon: "absolute",
+    height: "0",
+    position: 'absolute',
+    width: "100vw",
   },
   main: {
     marginTop: 0,
     marginBottom: 2,
   },
   footer: {
+    display: "flex",
     padding: theme.spacing(2),
-    paddingBottom: 0,
+    bottom: 0,
+    width: "100vw",
     backgroundColor: '#2c387e',
+    position: 'flex',
+
   },
   twitter: {
     transition: 'color .1s ease',
@@ -48,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   socialNav: {
     display: 'table',
     margin: '0 auto',
-    height: '50',
+    height: '2vh',
   },
   li: {
     float: 'left',
@@ -68,9 +73,6 @@ export default function StickyFooter() {
       <footer className={classes.footer}>
       <Container component="main" className={classes.main} maxWidth="sm">
           <Typography variant="header1" style={cyan} gutterBottom>Made by: Austin Pickett</Typography>
-          <br></br>
-          <Typography variant="header1" style={cyan} gutterBottom>Intra: apickett</Typography>
-
          <div  className={classes.socialNav}>
           <ul id="social_icons" className={classes.ul}>
           <li className={classes.li}>

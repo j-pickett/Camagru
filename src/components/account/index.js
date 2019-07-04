@@ -6,6 +6,7 @@ import {
   withEmailVerification,
 } from '../session';
 import { Button } from '@material-ui/core';
+import EmailChangeForm from '../emailchange';
 import { withFirebase } from '../firebase';
 import { PasswordForgetForm } from '../passwordforgot';
 import PasswordChangeForm from '../passwordchange';
@@ -14,6 +15,7 @@ import { Input } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import UsernameChangeForm from '../usernamechange';
 
  const theme = createMuiTheme({
   palette: {
@@ -78,6 +80,7 @@ const styles = {
   },
   passwordchange: {
     width: "60vw",
+    paddingTop: 10,
     paddingBottom: 10,
     margin: "auto",
     alignItems: "center",
@@ -98,6 +101,19 @@ function AccountPage() {
       <div>
         <h1>Account: {authUser.email}</h1>
         <h2>Here you can manage your password and link other accounts.</h2>
+        
+        <div style={styles.passwordchange} >
+        {/* <UsernameChangeForm style={styles.topCard}/> */}
+        </div>
+        
+        <Card
+        style={styles.card}
+        >
+        <CardContent
+        >
+        <EmailChangeForm/>
+        </CardContent>
+        </Card>
         <div style={styles.passwordchange} >
         <PasswordForgetForm style={styles.topCard}/>
         </div>
@@ -112,6 +128,7 @@ function AccountPage() {
         <Grid item md={12} direction="row"> 
         <LoginManagement style={styles.buttons} authUser={authUser} />
           </Grid>
+
      </div>
     )}
   </AuthUserContext.Consumer>
@@ -315,6 +332,7 @@ class DefaultLoginToggle extends Component {
     );
   }
 }
+
 
 const LoginManagement = withFirebase(LoginManagementBase);
 

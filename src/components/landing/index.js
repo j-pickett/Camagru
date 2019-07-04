@@ -1,7 +1,7 @@
 import Gallery from '../gallery';
 import React, { Component } from 'react';
 import Webcam from '../webcam/webcam';
-
+import Dropzone from 'react-dropzone';
 const styles = {
     gallery: {
       paddingTop: 10,
@@ -19,7 +19,7 @@ export default class LandingPage extends Component {
       <Gallery/>
       </div>
       <div style={styles.webcam}>
-      <Webcam />
+        <Webcam />
       </div>
         </div>
       )};

@@ -11,7 +11,7 @@ import Button from '@material-ui/core/Button';
 const SignUpPage = () => (
   <div>
     <h1>Sign Up</h1>
-    <SignUpForm />
+    <SignUpForm/>
   </div>
 );
 
@@ -27,6 +27,7 @@ const theme = createMuiTheme({
 });
 
 const styles = theme => ({
+
   mobileCard: {
     width: "60%",
     margin: "auto",
@@ -46,6 +47,7 @@ const styles = theme => ({
   card: {
     width: "60%",
     margin: "auto",
+    
   },
   button: {
     type: "submit",
@@ -103,7 +105,7 @@ class SignUpFormBase extends React.Component {
   onSubmit = event => {
     const { username, email, passwordOne, isAdmin } = this.state;
     const roles = [];
-
+    
     if (isAdmin) {
       roles.push(ROLES.ADMIN);
     }
@@ -163,6 +165,7 @@ class SignUpFormBase extends React.Component {
 
       const renderMobile = (
         <MuiThemeProvider theme={theme}>
+        <div style={styles.container}>
             <Card
               display="flex"
               rounded="true"
@@ -176,7 +179,7 @@ class SignUpFormBase extends React.Component {
                 value={username}
                 onChange={this.onChange}
                 type="text"
-                placeholder="Full Name"
+                placeholder="Enter a Username"
               /><br/>
               <Input
               style={{ float: "center", width: "50%"}}
@@ -206,6 +209,7 @@ class SignUpFormBase extends React.Component {
                 Admin:
                 <Input
                 style={{ width: "5%", float: "center"}}
+                  disableUnderline={true}
                   name="isAdmin"
                   type="checkbox"
                   checked={isAdmin}
@@ -223,71 +227,12 @@ class SignUpFormBase extends React.Component {
             </form>
             </CardContent>
             </Card>
+            </div>
             </MuiThemeProvider>
       );
 
     return (
       <MuiThemeProvider theme={theme}>
-      <Card
-        display="flex"
-        rounded="true"
-        style={styles.card}
-        >
-        <CardContent>
-      <form onSubmit={this.onSubmit}>
-        <Input
-        style={{ float: "center", width: "20%"}}
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <Input
-        style={{ float: "center", width: "50%"}}
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <Input
-        style={{ float: "center", width: "15%"}}
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <Input
-        style={{ float: "center", width: "15%"}}
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <label style={{ float: "center", width: "15%"}}>
-          Admin:
-          <Input
-          style={{ width: "1%", float: "center"}}
-            name="isAdmin"
-            type="checkbox"
-            checked={isAdmin}
-            onChange={this.onChangeCheckbox}
-          />
-        </label>
-        <br></br>
-        <Button 
-        style={styles.button}
-        disabled={isInvalid} type="submit">
-          Sign Up
-        </Button>
-
-        {error && <p>{error.message}</p>}
-      </form>
-      </CardContent>
-      </Card>
             {renderMobile}
       </MuiThemeProvider>
     );

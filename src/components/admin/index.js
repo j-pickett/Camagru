@@ -7,6 +7,22 @@ import * as ROLES from '../constants/roles';
 import * as ROUTES from '../constants/routes';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#2c387e',
+    },
+    secondary: {
+        main: '#33eaff',
+    },
+    progress: {
+    },
+},
+});
+
 /* mobile ready */
 const AdminPage = () => (
   <div>
@@ -71,9 +87,12 @@ class UserListBase extends Component {
     const { users, loading } = this.state;
 
     return (
+      <MuiThemeProvider theme={theme}>
       <div>
         <h2>Users</h2>
-        {loading && <div>Loading ...</div>}
+        {loading && <div> <CircularProgress color="secondary"/> </div>}
+
+        
         <ul style={{ listStyleType: "none", paddingLeft: "0", paddingRight: "10px"}}>
           {users.map(user => (
             <div style={styles.wrap}>
@@ -100,6 +119,7 @@ class UserListBase extends Component {
         </ul>
         <br></br>
         </div>
+        </MuiThemeProvider>
     );
   }
 }
@@ -144,9 +164,10 @@ class UserItemBase extends Component {
     const { user, loading } = this.state;
 
     return (
+      <MuiThemeProvider theme={theme}>
       <div>
         <h2>User ({this.props.match.params.id})</h2>
-        {loading && <div>Loading ...</div>}
+        {loading && <div> <CircularProgress color="secondary"/> </div>}
 
         {user && (
           <div>
@@ -170,6 +191,7 @@ class UserItemBase extends Component {
           </div>
         )}
       </div>
+      </MuiThemeProvider>
     );
   }
 }

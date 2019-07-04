@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import firebase from 'firebase/app';
 import { withFirebase } from '../firebase';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 const INITIAL_STATE = {
-  passwordOne: '',
-  passwordTwo: '',
+  emailOne: '',
   error: null,
 };
 
@@ -28,7 +28,7 @@ const styles = {
 };
 
 
-class PasswordChangeForm extends Component {
+class EmailChangeForm extends Component {
   constructor(props) {
     super(props);
 
@@ -36,10 +36,10 @@ class PasswordChangeForm extends Component {
   }
 
   onSubmit = event => {
-    const { passwordOne } = this.state;
+    const { emailOne } = this.state;
 
-    this.props.firebase
-      .doPasswordUpdate(passwordOne)
+    var user = firebase.auth().currentUser;
+    user.updateEmail(emailOne)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
       })
@@ -55,34 +55,26 @@ class PasswordChangeForm extends Component {
   };
 
   render() {
-    const { passwordOne, passwordTwo, error } = this.state;
+    const { emailOne, error } = this.state;
 
-    const isInvalid =
-      passwordOne !== passwordTwo || passwordOne === '';
+    const isInvalid = emailOne === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <div>
+      <form onSubmit={this.onSubmit} style={{width: "500px"}}>
+        <div style={styles.wrap}>
           
         <Input
-          name="passwordOne"
-          value={passwordOne}
+          name="emailOne"
+          value={emailOne}
           onChange={this.onChange}
-          type="password"
-          placeholder="New Password"
-        />
-        <Input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm New Password"
+          type="email"
+          placeholder="Change Your Email"
         />
         <Button
         style={styles.button}
         disabled={isInvalid}
         >
-          Change My Password
+          Change My Email
         </Button>
         </div>
 
@@ -92,4 +84,4 @@ class PasswordChangeForm extends Component {
   }
 }
 
-export default withFirebase(PasswordChangeForm);
+export default withFirebase(EmailChangeForm);

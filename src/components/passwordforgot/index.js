@@ -24,7 +24,6 @@ const styles = {
     borderRadius: '3',
     boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
     color: 'white',
-    float: "center",
     rounded: "true",
   },
   card: {
@@ -32,12 +31,13 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
+    height: "10vh",
     margin: "auto",
   },
 };
 
 const INITIAL_STATE = {
-  email: '',
+  password: '',
   error: null,
 };
 
@@ -49,10 +49,10 @@ class PasswordForgetFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { email } = this.state;
+    const { password } = this.state;
 
     this.props.firebase
-      .doPasswordReset(email)
+      .doPasswordReset(password)
       .then(() => {
         this.setState({ ...INITIAL_STATE });
       })
@@ -68,20 +68,20 @@ class PasswordForgetFormBase extends Component {
   };
 
   render() {
-    const { email, error } = this.state;
+    const { password, error } = this.state;
 
-    const isInvalid = email === '';
+    const isInvalid = password === '';
 
     return (
     <Card style={styles.card} >
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} style={{width: "500px"}}>
         <Input
           style={{ float: 'center', width: "50%"}}
-          name="email"
-          value={this.state.email}
+          name="password"
+          value={this.state.password}
           onChange={this.onChange}
           type="text"
-          placeholder="Email Address"
+          placeholder="New Password"
         />
         <Button 
         style={styles.button} disabled={isInvalid}>

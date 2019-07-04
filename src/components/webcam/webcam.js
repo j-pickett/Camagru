@@ -1,5 +1,5 @@
 import './webcam.css'
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import Webcam from 'react-webcam';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
@@ -18,7 +18,20 @@ import ThumbUp from '@material-ui/icons/ThumbUp';
 import Comment from '@material-ui/icons/Comment';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import tty from '../images/tty.png';
-import { Input } from '@material-ui/core';
+import { Input, Button } from '@material-ui/core';
+import Dropzone from 'react-dropzone';
+import Paper from '@material-ui/core/Paper';
+import { withFirebase } from '../firebase';
+import ImageCard from './grid';
+import { withAuthorization, AuthUserContext } from '../session';
+import { compose } from 'recompose';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+/* import NewStickers from './grid'; */
 
 /* mobile format fixed for landing page*/
 const theme = createMuiTheme({
@@ -68,22 +81,28 @@ const styles = {
         positon: 'relative',
         display: 'inline-block', 
     },
-    Gallery: {
-      outline: '5px dotted green',
-      maxWidth: '50vw',
-      minWidth: '5vw',
-
+    wrapperdiv: {
+      display: "flex",
+      justifyContent: "center",
+      height: "11vh",
+    },
+    dropzoneCard: {
+      width: "28vw",
+      height: "11vh",
+    },
+    dropzone: {
+      width: "28vw",
+      height: "11vh",
+      justify: "center",
       position: 'relative',
-      align: 'left',
-      paddingTop: '50px',
     },
     mobileGallery: {
-      outline: '5px dotted green',
       maxWidth: '100vw',
       minWidth: '5vw',
       align: 'center',
-      height: "45vh",
+      height: "80vh",
       positon: 'absolute',
+      flexGrow: 1,
     },
     button: {
       size: 0,
@@ -99,251 +118,229 @@ const styles = {
 
 }
 
-function SocialCard() {
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
-  const classes = useStyles();
-  var post = "POST";
-  return (
-    <MuiThemeProvider theme={theme}>
-    <Card className={classes.card}>
-      <CardHeader
-        avatar={
-          <Avatar src={tty} className={classes.avatar}>
-          </Avatar>
-        }
-        action={
-          <div>
-        <IconButton>
-          <ThumbUp color="secondary"/>
-        </IconButton>
-        <IconButton >
-          <Comment color="secondary"/>
-        </IconButton></div>
-        }
-        title={<Input justifyContent="center" placeholder="YOUR TITLE" disableUnderline="true"/>}
-        subheader={<Input disabled defaultValue={dateTime} disableUnderline="true"/>}
-      />
-      <CardMedia src={tty} image={tty} className={classes.media}>
-      </CardMedia>
-    </Card>
-    </MuiThemeProvider>
-  );
+
+class MyCamera extends React.Component{
+	constructor (props)
+	{
+		super(props)
+		this.state = {
+			showIndex: false,
+			showBullets: false,
+			infinite: true,
+			showThumbnails: true,
+			showFullscreenButton: false,
+			showGalleryFullscreenButton: false,
+			showNav: false,
+			slideOnThumbnailOver: false,
+			showPlayButton: false,
+			thumbnailPosition: 'bottom',
+			selected: -1,
+			total: -1,
+			selectedTime: null,
+			currentPic: null,
+			photos: [],
+			saved: [],
+			images: [],
+			loading: false,
+			text: '',
+			handleLike: async ( src, toc, selected, authUser ) => {
+				const iId = toc.replace(/\//g, '-').replace(/PM|AM/g, '') + authUser.uid.slice(0-7);
+				if (this.state.images[selected].liked === false)
+				{
+					const imgobj = {
+						src,
+						toc,
+						selected,
+						liked: true
+					}
+					const newimg = {
+						iid: iId,
+						title: window.prompt("Enter a title for your new image", iId),
+						src,
+						toc,
+						likes: 1,
+						comments: [{
+							text: window.prompt("Enter a Description", "Whaterver you want <3"),
+							userId: authUser.uid,
+							time: new Date().toLocaleString() 
+						},],
+					}
+					await this.state.saved.push(imgobj)
+					this.state.images[selected].liked = true;
+					this.props.firebase
+						.doAddLiked(newimg);
+					await this.setState(this.state)
+					return (imgobj);
+				}
+				else {
+					this.props.firebase.doRemoveLiked(iId);
+					for (let i in this.state.saved) {
+						if (this.state.selected === this.state.saved[i].selected) {
+							await delete this.state.saved[i];
+							let saved = await this.state.saved.filter((el) => {
+								return el != null;
+							})
+							this.state.images[selected].liked = false;
+							await this.setState({
+								saved
+							})
+							break;
+						}
+					}
+				}
+				return null;
+			}
+		}
+	}
+
+	componentDidMount() {
+		this.setState({ loading: true });
+
+	}
+
+	componentWillUnmount() {
+		this.props.firebase.gallery().off();
+	}
+
+
+	async onSlideEvent(event) {
+		await this.setState({
+			selected: event,
+			selectedTime: this.state.images[event].timeStamp,
+			currentPic: await this.state.photos[event]
+		})
+	}
+
+	async updateCurrent(pic, now) {
+		await this.setState({
+			currentPic: pic,
+			selectedTime: now,
+			total: this.state.total + 1,
+		})
+		await this.setState({
+			selected: this.state.total
+		})
+	}
+
+	setRef = webcam => {
+		this.webcam = webcam;
+	  };
+	
+	setRef2 = imageGallery => {
+		this._imageGallery = imageGallery;
+	}
+
+	capture = async () => {
+		let picture = await this.webcam.getScreenshot();
+		if (picture === null) {
+			return;
+		}
+		const now = new Date().toLocaleString();
+		let newpic = {
+			orignal: picture,
+			thumbnail: picture,
+			timeStamp: now,
+			liked: false
+		};
+		await this.state.photos.push(picture);
+		await this.state.images.push(newpic);
+		// this.setState({
+			// 	iamges: newpic
+			// })
+		await this.updateCurrent(picture, now);
+		await this.setState(this.state);
+	  };
+
+	  render() {
+		  const videoConstraints = {
+			  width: 320,
+			  heigh: 320,
+			  facingMode: "user"
+		  };
+		  return (
+			  <AuthUserContext.Consumer>
+				  {authUser => (
+				<div className="MyCameraStart" style={{position: 'relative'}}>
+					<div className="Smile">
+						<Webcam
+						audio={false}
+						height={320}
+						ref={this.setRef}
+						screenshotFormat="image/jpeg"
+						width={320}
+						videoConstraints={videoConstraints}
+						/>
+					</div>
+					<div style={{margin: 'auto', alignContent: 'center'}}>
+						<IconButton variant="contained" color="secondary" disabled={false} onClick={this.capture}><PhotoCamera/></IconButton>
+					</div>
+					<div className="Gallery" style={{
+						maxWidth: '750px',
+						whiteSpace: 'auto',
+						margin: 'auto',
+					}}>
+						<ExpansionPanel TransitionProps={{ unmountOnExit: true }}>
+							<ExpansionPanelSummary
+                raised="3"
+								expandIcon={<ExpandMoreIcon />}
+								aria-controls="panel1a-content"
+								id="pnel1a-header"
+							>Recent Gallery
+							</ExpansionPanelSummary>
+							<ExpansionPanelDetails>
+								<Container >
+									<Grid container
+										direction="column"
+										justify="center"
+										alignItems="center"
+									>
+										<Grid item style={{maxWidth: '658px'}}>
+											<ImageGallery
+												ref={this.setRef2}
+												// onThumbnailClick={this._onThumbnailClick.bind(this)}
+												items={this.state.images} 
+												infinite={this.state.infinite}
+												showBullets={this.state.showBullets}
+												// onClick={this._onImageClick.bind(this)}
+												showNav={this.state.showNav}
+												showIndex={this.state.showIndex}
+												slideOnThumbnailOver={this.state.slideOnThumbnailOver}
+												thumbnailPosition={this.state.thumbnailPosition}
+												showPlayButton={this.state.showPlayButton}
+												showGalleryFullscreenButton={this.state.showGalleryFullscreenButton}
+												showFullscreenButton={this.state.showFullscreenButton}
+												additionalClass="app-image-gallery"
+												onSlide={this.onSlideEvent.bind(this)}
+												disableSwipe={true}
+											/>
+										</Grid>
+										<Grid item >
+                      <ImageCard 
+												src={!this.state.currentPic ? null : this.state.currentPic}
+												timeStamp={this.state.selectedTime}
+												selected={this.state.selected}
+												liked={this.state.selected === -1 ? null : this.state.images[this.state.selected].liked }
+												handleLike={this.state.handleLike}
+												authUser={authUser}
+											/>
+										</Grid>
+									</Grid>
+								</Container>
+							</ExpansionPanelDetails>
+						</ExpansionPanel>
+					</div>
+				</div>
+				)}
+				</AuthUserContext.Consumer>
+		  	);
+	 	 }
 }
 
-class WebcamCapture extends React.Component {
-  constructor(props)
-    {
-        super(props);
-        this.state = {
-        images: [],
-        showIndex: true,
-        showBullets: true,
-        infinite: true,
-        showThumbnails: true,
-        showFullscreenButton: false,
-        showGalleryFullscreenButton: false,
-        showPlayButton: false,
-        showGalleryPlayButton: false,
-        showNav: true,
-        isRTL: false,
-        slideDuration: 450,
-        slideInterval: 2000,
-        slideOnThumbnailOver: false,
-        thumbnailPosition: "bottom",
-        showVideo: {},
-        photos: [],
-			  saved: [],
-        stopPropagation: false,
-        handleLike: async (src, toc, selected) => {
-          if (this.state.images[selected].liked === false)
-          {
-            const imgobj = {
-              src,
-              toc,
-              selected,
-              liked: true
-            }
-            await this.state.saved.push(imgobj)
-            this.state.images[selected].liked = true;
-            await this.setState(this.state)
-            return (imgobj);
-          }
-          else {
-            for (let i in this.state.saved) {
-              if (this.state.selected === this.state.saved[i].selected) {
-                await delete this.state.saved[i];
-                let saved = await this.state.saved.filter((el) => {
-                  return el != null;
-                })
-                this.state.images[selected].liked = false;
-                await this.setState({
-                  saved
-                })
-                break;
-              }
-            }
-          }
-          return null;
-        }
-      };
-      }
+const condition = authUser => !!authUser;
 
-      async onSlideEvent(event) {
-        await this.setState({
-          selected: event,
-          selectedTime: this.state.images[event].timeStamp,
-          currentPic: await this.state.photos[event]
-        })
-      }
-    
-    async updateCurrent(pic, now) {
-      await this.setState({
-        currentPic: pic,
-        selectedTime: now,
-        total: this.state.total + 1,
-      })
-      await this.setState({
-        selected: this.state.total
-      })
-    }
-    
-    getCurrentIndex() {
-      return this.state.currentIndex;
-    }
 
-    setRef = webcam => {
-        this.webcam = webcam;
-      };
 
-      setRef2 = imageGallery => {
-        this._imageGallery = imageGallery;
-      }
-
-      _onImageClick(event) {
-        console.debug('clicked on image', event.target, 'at index', this._imageGallery.getCurrentIndex());
-      }
-
-      _onImageLoad(event) {
-        console.debug('loaded image', event.target.src);
-      }
-    
-      _onPause(index) {
-        console.debug('paused on index', index);
-      }
-    
-      capture = async () => {
-        let picture = await this.webcam.getScreenshot();
-        if (picture === null) {
-          return;
-        }
-        const now = new Date().toLocaleString();
-        let newpic = {
-          orignal: picture,
-          thumbnail: picture,
-          timeStamp: now,
-          liked: false
-        };
-        await this.state.photos.push(picture);
-        await this.state.images.push(newpic);
-        // this.setState({
-          // 	iamges: newpic
-          // })
-        await this.updateCurrent(picture, now);
-        await this.setState(this.state);
-        };
-    
-      render() {
-        const videoConstraints = {
-          width: 1280,
-          height: 720,
-          facingMode: "user",
-        };
-        
-        const renderMobileImages = (
-          <div style={styles.mobileGallery}>
-     <ImageGallery
-     ref={this.setRef2}
-     items={this.state.images}
-     lazyLoad={false}
-     onImageLoad={this._onImageLoad}
-     infinite={this.state.infinite}
-     showBullets={false}
-     showThumbnails={this.state.showThumbnails}
-     showIndex={true}
-     showNav={this.state.showNav}
-     isRTL={false}
-     showFullscreenButton={false}
-     showGalleryFullscreenButton={false}
-     showPlayButton={false}
-     showGalleryPlayButton={false}
-     onSlide={this.onSlideEvent.bind(this)}
-     slideDuration={parseInt(this.state.slideDuration)}
-     slideInterval={parseInt(this.state.slideInterval)}
-     slideOnThumbnailOver={this.state.slideOnThumbnailOver}
-     thumbnailPosition={this.state.thumbnailPosition}
-     stopPropagation={this.state.stopPropagationt}
-     additionalClass="app-image-gallery"/>
-     <ImageGallery/>
-     <SocialCard position="center"/>
-     </div>
-        );
-
-  return(
-          
-      <MuiThemeProvider theme={theme}>
-     <div style={styles.container}>
-       <div style={styles.Webcam}>
-       <Webcam
-         audio={false}
-         height={400}
-         ref={this.setRef}
-         screenshotFormat="image/jpeg"
-         width={400}
-         videoConstraints={videoConstraints}
-       ></Webcam>
-       
-     <div style={styles.button}>
-   <IconButton variant="raised" color="secondary" component="span" onClick={this.capture}>
-     <PhotoCamera />
-   </IconButton>
-     </div>
-     </div>
-     {/* <ImageGallery
-     ref={this.setRef2}
-     items={this.state.images}
-     lazyLoad={false}
-     onImageLoad={this._onImageLoad}
-     infinite={this.state.infinite}
-     showBullets={this.state.showBullets}
-     showThumbnails={this.state.showThumbnails}
-     showIndex={true}
-     showNav={this.state.showNav}
-     isRTL={false}
-     showFullscreenButton={this.state.showFullscreenButton}
-     showGalleryFullscreenButton={this.state.showGalleryFullscreenButton}
-     showPlayButton={this.state.showPlayButton}
-     showGalleryPlayButton={this.state.showGalleryPlayButton}
-     onSlide={this.onSlideEvent.bind(this)}
-     slideDuration={parseInt(this.state.slideDuration)}
-     slideInterval={parseInt(this.state.slideInterval)}
-     slideOnThumbnailOver={this.state.slideOnThumbnailOver}
-     thumbnailPosition={this.state.thumbnailPosition}
-     stopPropagation={this.state.stopPropagation}
-     additionalClass="app-image-gallery"/>
-     <ImageGallery/>
-     <SocialCard
-     position="center"/>*/}
-     </div>
-     <div>{renderMobileImages}</div>
-     </MuiThemeProvider>
-   );
-      }
-      
-}
-
-/*ADD CODE FOR MOBILE SWIPING ON GALLERY */
-
-export default (WebcamCapture);
+export default compose(
+	withFirebase,
+	withAuthorization(condition),
+)(MyCamera);

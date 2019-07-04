@@ -35,6 +35,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 const styles = theme => ({
   root: {
     width: '100%',
+    paddingBottom: "40px",
   },
   NavBanner: {
     display: 'block',
@@ -210,7 +211,6 @@ class PrimarySearchAppBar extends React.Component {
              <marquee><a href={ROUTES.LANDING}><img src={Banner} style={styles.NavBanner} width="450px"height="75px" padding-top="25px"></img></a></marquee>{/* eslint-disable-line */}             
              </Router>
               </div>
-              
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}></div>

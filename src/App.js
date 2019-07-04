@@ -18,13 +18,16 @@ import { withAuthentication } from './components/session';
 
 const styles = {
   container: {
+      minHeight: "100vh",
       textAlign: 'center',
-      minHeight: '100vh',
       minWidth: '100vw',
       background:
       "url(http://papers.co/wallpaper/papers.co-vm09-poly-blue-purple-abstract-pattern-36-3840x2400-4k-wallpaper.jpg) no-repeat center center fixed",
-    backgroundSize: '100% 100%',
-    position: "relative",
+    backgroundSize: '100vw 100vh',
+    position: "flex",
+    fontSize: 'calc(10px + 2vmin)',
+    color: 'rgba(255, 255, 255, 0.6)',
+    flexGrow: 1,
   },
   appBanner: {
     width: '10vmin',
@@ -36,8 +39,7 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: 'calc(10px + 2vmin)',
-    color: 'rgba(255, 255, 255, 0.6)',
+    paddingBottom: 25,
   },
   sticker: {
     minHeight: '20vmin',
@@ -59,13 +61,15 @@ const styles = {
     bottom: 0,
     width: '100%',
     height: 30,
+  },
+  taskbar: {
+    paddingBottom: "20",
   }
 }
 
 const App = () => {
   return (
     <div style={styles.container}>
-      <header style={styles.header}>
 
       <Router>
       <div style={styles.taskbar}>
@@ -80,8 +84,7 @@ const App = () => {
             <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
             <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
         </Router>
-      </header>
-      <MyFooter style={styles.footer}/>
+      {/* <MyFooter style={styles.footer}/> */}
     </div>
     
   );
