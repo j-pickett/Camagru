@@ -7,20 +7,15 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import ThumbUp from '@material-ui/icons/ThumbUp';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
-import SaveIcon from '@material-ui/icons/Save';
 import CommentIcon from '@material-ui/icons/Comment';
-import SettingsIcon from '@material-ui/icons/Settings';
 import CardHeader from '@material-ui/core/CardHeader';
 import Badge from '@material-ui/core/Badge';
-import { Button, Paper, InputBase, CircularProgress } from '@material-ui/core';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
 import {
 	withAuthorization,
 	withEmailVerification,
@@ -29,20 +24,23 @@ import {
 import { Switch, Route, Link } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 import { withFirebase } from '../firebase';
-import { GridList, GridListTile } from '@material-ui/core';
+import { GridList, GridListTile, CircularProgress } from '@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { Button} from '@material-ui/core';
 
 const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#2c387e',
-    },
-    secondary: {
-        main: '#33eaff',
-    }
-},
-});
+	palette: {
+	  primary: {
+		main: '#2c387e',
+	  },
+	  secondary: {
+		  main: '#33eaff',
+	  }
+  },
+  });
 
-const styles = {
+
+  const styles = {
 	paper: {
 		rounded: true,
 		width: "30vw",
@@ -62,39 +60,6 @@ const styles = {
       variant: "contained",
       textColor: "primary",
 	},
-	messages: {
-    width: "70%",
-    position: "center",
-    margin: "auto",
-  },
-  card2: {
-    margin: "auto",
-  width: "25vh",
-  position: "center",
-  },
-  delete: {
-    type: "submit",
-    variant: "contained",
-    size: "medium",
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #bb0a1e 90%)',
-    border: '0',
-    borderRadius: '3',
-    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-    color: 'white',
-    rounded: "true",
-  },
-  edit: {
-    type: "submit",
-    variant: "contained",
-    size: "medium",
-    background: 'linear-gradient(50deg, #2c387e 20%, #33eaff 80%)',
-    border: '0',
-    borderRadius: '3',
-    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
-    color: 'white',
-    rounded: "true",
-    textColor: "primary",
-  },
 }
 
 const useStyles = makeStyles(theme => ({
@@ -153,17 +118,8 @@ const ImageCard = ({ imageObject, authUser }) => {
 
 
 	return (
-		<MuiThemeProvider theme={theme}>
 		<Card className={classes.card} style={{height: '490px'}}>
       <CardHeader
-        action={
-			<IconButton aria-label="Settings" component={Link} to={{
-				pathname: `${ROUTES.HOME}/${imageObject.uid}`,
-				state: { imageObject, authUser },
-			}}>
-            <SettingsIcon />
-          </IconButton>
-		}
 		style={{whiteSpace: 'nowrap', fontSize: '1em'}}
         title={otit ? otit.length > 28 ? otit.substr(0, 28) + "..." : otit : null}
 		/>
@@ -179,16 +135,10 @@ const ImageCard = ({ imageObject, authUser }) => {
       <CardActions disableSpacing style={{display: 'inline-flex', position: 'absolute', bottom: 0, right: '33%'}}>
 
 		<IconButton aria-label="Add to favorites" 
-			// onClick={() => {
-				
-				// if (window.confirm('Are you sure you want to delete the picture? you can not have it back.')){
-					// 	return delPicture(imageObject, authUser);
-					// }
-					// }}
 					color={ 'primary' }
 					>
 				<Badge badgeContent={imageObject.likes} >
-        	<ThumbUp /> 
+        	<FavoriteIcon /> 
 					</Badge>
         </IconButton>
         <IconButton aria-label="Share">
@@ -196,7 +146,7 @@ const ImageCard = ({ imageObject, authUser }) => {
         </IconButton>
         <IconButton
           component={Link} to={{
-			  pathname: `${ROUTES.HOME}/${imageObject.uid}`,
+			  pathname: `${ROUTES.POSTS}/${imageObject.uid}`,
 			  state: { imageObject, authUser },
 		  }}>
           <CommentIcon />
@@ -206,12 +156,11 @@ const ImageCard = ({ imageObject, authUser }) => {
         </IconButton>
       </CardActions>
     </Card>
-	</MuiThemeProvider>
 	);
 }
 
 const HomeHome = () => (
-		<AuthUserContext.Consumer>		
+	<AuthUserContext.Consumer>		
 		{authUser => (
 			<Images authUser={authUser} />
 		)}
@@ -317,49 +266,21 @@ const MainCard = ({ authUser, imageObject, doUpdateDesc, doUpdateUid, doUpdateLi
 		setValues({ ...values, [name]: event.target.value });
 	  };
 
-	const iconAction = () => (
-		<IconButton aria-label="Settings" onClick={ async () => {
-			if (window.confirm("would you like to save something?")){
-				if(window.confirm("What would you like to update? Y = Desc n Title | N = more options ")){
-					await doUpdateDesc(values.multiline);
-					await doUpdateUid(values.title);
-				} else {
-					if (window.confirm("Update title?")){
-						await doUpdateUid(values.title);
-					} else {
-						if (window.confirm("Update Desc?")){
-							await doUpdateDesc(values.multiline);
-						} else {
-							return ;
-						}
-					}
-				}
-			} else {
-				return ;
-			}
-
-		}
-			}>
-			<SaveIcon />
-		</IconButton>
-	)
 
 	return(
-		<div align="center" position="center">
+		<div align="center">
 			<Grid container>
-				<Card sclassName={classes.pageMain} style={{align: "center", position: "center", width: '40vw',  color: "secondary"}}>
-					<CardHeader action={iconAction()} title={
-						<TextField id="Title" label="Title {Limit : 28 Characters}" fullWidth onChange={handleChange('title')} value={values.title} />
-					}/>
+				<Card className={classes.pageMain} style={{minWidth: '100%'}}>
 					<CardMedia className={classes.pageMedia} image={imageObject ? imageObject.src : null} title={imageObject ? imageObject.uid : null} />
 					<IconButton aria-label="Add to favorites" 
 						onClick={() => {doUpdateLike(imageObject);}}
 								color={ 'primary' }
 								>
 							<Badge badgeContent={imageObject.likes} >
-						<ThumbUp/> 
+						<FavoriteIcon /> 
 								</Badge>
 					</IconButton>
+
 					<CardContent>
 						<TextField
 							id="Description Box" label="Description" multiline fullWidth rowsMax="4"
@@ -375,6 +296,7 @@ const MainCard = ({ authUser, imageObject, doUpdateDesc, doUpdateUid, doUpdateLi
 							</Card>
 						</Grid>
 							{`${imageObject.comments[0].text}`}
+						
 					</CardContent>
 				</Card>
 			</Grid>
@@ -382,33 +304,32 @@ const MainCard = ({ authUser, imageObject, doUpdateDesc, doUpdateUid, doUpdateLi
 	);
 	}
 
-const HomePageRoutes = () => {
+const ImagePage = () => {
 
 	return(
-			<div align="center">
+			<div>
 				<Switch>
-					<Route exact path={ROUTES.HOME} component={Home} />
-					<Route exact path={ROUTES.MYIMAGE} component={SinglePage} />
+					<Route exact path={ROUTES.POSTS} component={Home} />
+					<Route exact path={ROUTES.POSTSID} component={SinglePage} />
 				</Switch>
 			</div>
 )};
-
 
 const ImageList = ({ images, authUser, firebase }) => {
 	const classes = useStyles();
 
 	return(
 		<div align="center">
-			<GridList cols={3} spacing={0} cellHeight={500} classes={{ root: classes.root }}>
-			{images.map(image => 
-				image.src ? (
-				<GridListTile key={image.uid} style={{minWidth: `500px`}} >
-						<ImageCard classes={{ root: classes.images }} imageObject={image} authUser={authUser} />
-				</GridListTile>
-			) : (null)
-				)}
-			</GridList>
-		</div>
+		<GridList cols={3} spacing={0} cellHeight={500} classes={{ root: classes.root }}>
+		{images.map(image => 
+			image.src ? (
+			<GridListTile key={image.uid} style={{minWidth: `500px`}} >
+					<ImageCard classes={{ root: classes.images }} imageObject={image} authUser={authUser} />
+			</GridListTile>
+		) : (null)
+			)}
+		</GridList>
+	</div>
 	);
 }
 
@@ -459,7 +380,7 @@ class SinglePageBase extends Component {
 		this.setState({ loading: true });
 
 		this.props.firebase
-			.image(this.props.match.params.id)
+			.gallery(this.props.match.params.id)
 			.on('value', snapshot => {
 				this.setState({
 					imageObject: snapshot.val(),
@@ -469,7 +390,7 @@ class SinglePageBase extends Component {
 	}
 
 	componentWillUnmount() {
-		this.props.firebase.image(this.props.match.params.id).off();
+		this.props.firebase.gallery(this.props.match.params.id).off();
 	}
 
 	render() {
@@ -536,7 +457,7 @@ class ImagesBase extends Component {
 					if (toRemove){
 						toRemove.map(image => this.props.firebase.gallery(this.props.authUser.uid).child(image.uid).set(null));
 					}
-					const user_pics = imgList.filter(image => this.props.authUser.uid === image.comments[0].userId);
+					const user_pics = imgList.filter(image => this.props.firebase.gallery(this.props.authUser.uid));
 					return user_pics.filter(image => image.likes);
 				}
 				this.setState ({
@@ -566,13 +487,13 @@ class ImagesBase extends Component {
 	}
 
 	render() {
-		const {images, loading } = this.state;
+		const { images, loading } = this.state;
 
 		return(
 			<MuiThemeProvider theme={theme}>
 			<AuthUserContext.Consumer>
 				{authUser => (
-					<div align="center">
+					<div>
 						{loading && <div><CircularProgress color="secondary"/></div>}
 						{images ? (
 							<ImageList images={images} authUser={authUser} firebase={this.props.firebase}/>
@@ -588,268 +509,6 @@ class ImagesBase extends Component {
 
 }
 
-class MessagesBase extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      text: '',
-      loading: false,
-      messages: [],
-      limit: 5,
-    };
-  }
-
-  componentDidMount() {
-    this.onListenForMessages();
-  }
-
-  onListenForMessages = () => {
-    this.setState({ loading: true });
-
-    this.props.firebase
-      .messages()
-      .orderByChild('createdAt')
-      .limitToLast(this.state.limit)
-      .on('value', snapshot => {
-        const messageObject = snapshot.val();
-
-        if (messageObject) {
-          const messageList = Object.keys(messageObject).map(key => ({
-            ...messageObject[key],
-            uid: key,
-          }));
-
-          this.setState({
-            messages: messageList,
-            loading: false,
-          });
-        } else {
-          this.setState({ messages: null, loading: false });
-        }
-      });
-  };
-
-  componentWillUnmount() {
-    this.props.firebase.messages().off();
-  }
-
-  onChangeText = event => {
-    this.setState({ text: event.target.value });
-  };
-
-  onCreateMessage = (event, authUser) => {
-    this.props.firebase.messages().push({
-      text: this.state.text,
-      userId: authUser.uid,
-      createdAt: this.props.firebase.serverValue.TIMESTAMP,
-    });
-
-    this.setState({ text: '' });
-
-    event.preventDefault();
-  };
-
-  onEditMessage = (message, text) => {
-    this.props.firebase.message(message.uid).set({
-      ...message,
-      text,
-      editedAt: this.props.firebase.serverValue.TIMESTAMP,
-    });
-  };
-
-  onRemoveMessage = uid => {
-    this.props.firebase.message(uid).remove();
-  };
-
-  onNextPage = () => {
-    this.setState(
-      state => ({ limit: state.limit + 5 }),
-      this.onListenForMessages,
-    );
-  };
-
-  render() {
-    const { users } = this.props;
-    const { text, messages, loading } = this.state;
-    return (
-      <MuiThemeProvider theme={theme}>
-      <AuthUserContext.Consumer>
-        {authUser => (
-          <div>
-            {!loading && messages && (
-              <Button style={styles.button} onClick={this.onNextPage}>
-                More
-              </Button>
-            )}
-
-            {loading && <div><CircularProgress color="secondary"/></div>}
-
-            <div style={styles.messages}>
-            <Card
-        display="flex"
-        rounded="true"
-        
-        >
-        <CardContent>
-            {messages && (
-              <MessageList
-                messages={messages.map(message => ({
-                  ...message,
-                  user: users 
-                    ? users[message.userId]
-                    : { userId: message.userId },
-                }))}
-                onEditMessage={this.onEditMessage}
-                onRemoveMessage={this.onRemoveMessage}
-              />
-            )}
-            {!messages && <div>There are no messages ...</div>}
-            </CardContent>
-        </Card>
-        </div>
-        <br/>
-              <div align="center">
-              <Paper style={styles.paper}>   
-               <InputBase
-               placeholder="type a message"
-                type="text"
-                value={text}
-                onChange={this.onChangeText}>
-                </InputBase>
-                <Button onClick={event =>this.onCreateMessage(event, authUser)} style={styles.button}>Send</Button>
-            </Paper>
-            </div>
-            <br/>
-          </div>
-          
-        )}
-      </AuthUserContext.Consumer>
-      </MuiThemeProvider>
-    );
-  }
-}
-
-const MessageList = ({
-  messages,
-  onEditMessage,
-  onRemoveMessage,
-}) => (
-  <ul style={{ listStyleType: "none" }}>
-    {messages.map(message => (
-      <MessageItem
-        key={message.uid}
-        message={message}
-        onEditMessage={onEditMessage}
-        onRemoveMessage={onRemoveMessage}
-      />
-    ))}
-  </ul>
-);
-
-class MessageItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      editMode: false,
-      editText: this.props.message.text,
-    };
-  }
-
-  onToggleEditMode = () => {
-    this.setState(state => ({
-      editMode: !state.editMode,
-      editText: this.props.message.text,
-    }));
-  };
-
-  onChangeEditText = event => {
-    this.setState({ editText: event.target.value });
-  };
-
-  onSaveEditText = () => {
-    this.props.onEditMessage(this.props.message, this.state.editText);
-
-    this.setState({ editMode: false });
-  };
-
-  render() {
-    const { message, onRemoveMessage } = this.props;
-    const { editMode, editText } = this.state;
-
-    return (
-      <li>
-        {editMode ? (
-          <Paper>
-          <InputBase
-            type="text"
-            value={editText}
-            onChange={this.onChangeEditText}
-          />
-          </Paper>
-        ) : (
-          <span>
-            <strong style={{ color: 'hotPink' }}>
-              {message.user.username || message.user.userId}
-            </strong>{' '}
-            {message.text} {message.editedAt && <span>(Edited)</span>}
-          </span>
-        )}
-
-        {editMode ? (
-          <span>
-            <Button style={styles.Button} onClick={this.onSaveEditText}>Save</Button>
-            <Button style={styles.Button} onClick={this.onToggleEditMode}>Reset</Button>
-          </span>
-        ) : (
-          <Button style={styles.edit} onClick={this.onToggleEditMode}><EditIcon/></Button>
-        )}
-
-        {!editMode && (
-          <Button style={styles.delete}
-            onClick={() => onRemoveMessage(message.uid)}
-          >
-            <DeleteIcon/>
-          </Button>
-        )}
-      </li>
-    );
-  }
-}
-class HomePage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      users: null,
-    };
-  }
-
-  componentDidMount() {
-    this.props.firebase.users().on('value', snapshot => {
-      this.setState({
-        users: snapshot.val(),
-      });
-    });
-  }
-
-  componentWillUnmount() {
-    this.props.firebase.users().off();
-  }
-
-  render() {
-    return (
-      <div align="center">
-		<Messages users={this.state.users} />
-		<HomePageRoutes />
-      </div>
-    );
-  }
-}
-
-
-const Messages = withFirebase(MessagesBase);
 const Comments = withFirebase(CommentBase);
 const Home = withFirebase(HomeHome);
 const Images = withFirebase(ImagesBase);
@@ -860,4 +519,4 @@ const SinglePage = withFirebase(SinglePageBase);
 export default compose(
 	withEmailVerification,
 	withAuthorization(condition),
-)(HomePage);
+)(ImagePage);

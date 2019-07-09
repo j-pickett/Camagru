@@ -146,6 +146,7 @@ class SignInFormBase extends Component {
           placeholder="Email Address"
         />
         <Input
+         onSubmit={this.onSubmit}
         style={{ float: 'center', width: "39vw", }}
           name="password"
           value={password}
@@ -153,9 +154,9 @@ class SignInFormBase extends Component {
           type="password"
           placeholder="Password"
         />
-        <button style={styles.button} disabled={isInvalid} onSubmit={this.onSubmit}>
+        <Button style={styles.button} disabled={isInvalid} onClick={this.onSubmit}>
           Sign In
-        </button>
+        </Button>
 
         {error && <p>{error.message}</p>}
       </form>

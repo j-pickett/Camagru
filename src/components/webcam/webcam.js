@@ -1,26 +1,11 @@
 import './webcam.css'
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import Webcam from 'react-webcam';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
-import ThumbUp from '@material-ui/icons/ThumbUp';
-import Comment from '@material-ui/icons/Comment';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import tty from '../images/tty.png';
-import { Input, Button } from '@material-ui/core';
-import Dropzone from 'react-dropzone';
-import Paper from '@material-ui/core/Paper';
 import { withFirebase } from '../firebase';
 import ImageCard from './grid';
 import { withAuthorization, AuthUserContext } from '../session';
@@ -31,9 +16,7 @@ import Container from '@material-ui/core/Container';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-/* import NewStickers from './grid'; */
 
-/* mobile format fixed for landing page*/
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -44,79 +27,6 @@ const theme = createMuiTheme({
     }
 },
 });
-
-const useStyles = makeStyles(theme => ({
-  card: {
-    width: "80vw",
-    height: "33vh",
-    display: 'inline-block',
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    background: 'linear-gradient(50deg, #2c387e 20%, #33eaff 80%)',
-  },
-}));
-
-const styles = {
-    container: {
-        alignItems: 'center',
-        flexDirection: 'flex-end',
-        justifyContent: 'space-between',
-        width: '100%',
-        height: '100%',
-        right: 0,
-        positon: 'relative',
-        display: 'inline-block', 
-    },
-    wrapperdiv: {
-      display: "flex",
-      justifyContent: "center",
-      height: "11vh",
-    },
-    dropzoneCard: {
-      width: "28vw",
-      height: "11vh",
-    },
-    dropzone: {
-      width: "28vw",
-      height: "11vh",
-      justify: "center",
-      position: 'relative',
-    },
-    mobileGallery: {
-      maxWidth: '100vw',
-      minWidth: '5vw',
-      align: 'center',
-      height: "80vh",
-      positon: 'absolute',
-      flexGrow: 1,
-    },
-    button: {
-      size: 0,
-       secondary: {
-        transition: theme.transitions.create('transform', {
-          duration: theme.transitions.duration.shortest,
-        }),
-        main: '#33eaff',
-        display: 'inline-block',
-        transform: "translate(100px, 100px)",
-    }
-    }
-
-}
 
 
 class MyCamera extends React.Component{
@@ -258,6 +168,7 @@ class MyCamera extends React.Component{
 			  facingMode: "user"
 		  };
 		  return (
+				<MuiThemeProvider theme={theme}>
 			  <AuthUserContext.Consumer>
 				  {authUser => (
 				<div className="MyCameraStart" style={{position: 'relative'}}>
@@ -272,7 +183,7 @@ class MyCamera extends React.Component{
 						/>
 					</div>
 					<div style={{margin: 'auto', alignContent: 'center'}}>
-						<IconButton variant="contained" color="secondary" disabled={false} onClick={this.capture}><PhotoCamera/></IconButton>
+						<IconButton variant="contained" color="secondary" disabled={false} onClick={this.capture}><PhotoCamera /></IconButton>
 					</div>
 					<div className="Gallery" style={{
 						maxWidth: '750px',
@@ -332,6 +243,7 @@ class MyCamera extends React.Component{
 				</div>
 				)}
 				</AuthUserContext.Consumer>
+				</MuiThemeProvider>
 		  	);
 	 	 }
 }

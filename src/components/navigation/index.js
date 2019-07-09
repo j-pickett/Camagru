@@ -12,7 +12,7 @@ import FiberNew from '@material-ui/icons/FiberNew';
 import Exit from '@material-ui/icons/ExitToApp';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuList from '@material-ui/core/MenuList';
-
+import Image from '@material-ui/icons/Image';
 
 const Navigation = () => (
   <AuthUserContext.Consumer>
@@ -28,18 +28,20 @@ const Navigation = () => (
 
 const NavigationAuth = ({ authUser }) => (
   <div>
+  <AuthUserContext.Provider authUser={authUser} >
    <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.LANDING}><IconButton><Land></Land> Landing</IconButton></Link></MenuList>
     
    <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.HOME}><IconButton><Home></Home> Home</IconButton></Link></MenuList>
     
     <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.ACCOUNT}><IconButton><AccountCircle></AccountCircle> Account</IconButton></Link></MenuList>
-    
-    {authUser.roles.includes(ROLES.ADMIN) && (
-    <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.ADMIN}><IconButton><HTTPS></HTTPS> Admin</IconButton></Link></MenuList>
-      
-    )}
+
+    <MenuList style={{ disableGutters: "true" }}><Link style={{ textDecoration: 'none' }} to={ROUTES.POSTS}><IconButton><Image></Image> Images</IconButton></Link></MenuList>
+
+
+
    
    <MenuList ><Exit/><SignOutButton /></MenuList>
+   </AuthUserContext.Provider>
     </div>
 );
 

@@ -1,19 +1,16 @@
 import React from 'react';
-import Taskbar from './components/taskbar/taskbar';
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
-import MyFooter from './components/cover_image/footer';
-import LandingPage from './components/landing';
-import AccountPage from './components/account';
- import {
-  BrowserRouter as Router,
-  Route,
+import { BrowserRouter as Router,
+		Route,
 } from 'react-router-dom';
 import SignUpPage from './components/signup';
 import HomePage from './components/home';
 import * as ROUTES from './components/constants/routes';
 import SignInPage from './components/signin';
 import AdminPage from './components/admin';
+import ImagePage from './components/publicimages';
+import LandingPage from './components/landing';
+import AccountPage from './components/account';
+import Taskbar from './components/taskbar';
 import { withAuthentication } from './components/session';
 
 const styles = {
@@ -57,7 +54,6 @@ const styles = {
     height: '50%',
   },
   footer: {
-    position: 'absolute',
     bottom: 0,
     width: '100%',
     height: 30,
@@ -67,31 +63,23 @@ const styles = {
   }
 }
 
-const App = () => {
-  return (
-    <div style={styles.container}>
+const App = () => (
+	<Router>
+  <div style={styles.container}>
 
-      <Router>
       <div style={styles.taskbar}>
       <Taskbar />
       </div>
 
-      
-            <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
-            <Route exact path={ROUTES.LANDING} component={LandingPage} />
-            <Route exact path={ROUTES.HOME} component={HomePage} />
-            <Route exact path={ROUTES.ADMIN} component={AdminPage} />
-            <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
-            <Route exact path={ROUTES.SIGN_IN} component={SignInPage} />
-        </Router>
-      {/* <MyFooter style={styles.footer}/> */}
-    </div>
-    
-  );
-}
+			<Route exact path={ROUTES.LANDING} component={LandingPage} />
+			<Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+			<Route path={ROUTES.SIGN_IN} component={SignInPage} />
+			<Route path={ROUTES.HOME} component={HomePage} />
+			<Route path={ROUTES.ACCOUNT} component={AccountPage} />
+			<Route path={ROUTES.ADMIN} component={AdminPage} />
+			<Route path={ROUTES.POSTS} component={ImagePage} />
+		</div>
+	</Router>
+);
 
-App.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withAuthentication((withStyles(styles)(App)));
+export default withAuthentication(App);

@@ -15,7 +15,6 @@ import { Input } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
-import UsernameChangeForm from '../usernamechange';
 
  const theme = createMuiTheme({
   palette: {
@@ -50,6 +49,7 @@ const SIGN_IN_METHODS = [
 const styles = {
   list: {
     listStyleType: "none",
+    marginBottom: 0,
   },
   button: {
     padding: 10,
@@ -189,7 +189,7 @@ class LoginManagementBase extends Component {
     const { activeSignInMethods, error } = this.state;
 
     return (
-      <div width="40%">
+      <div width="40%" height="40vh">
         <ul style={styles.list}>
           {SIGN_IN_METHODS.map(signInMethod => {
             //const onlyOneLeft = activeSignInMethods.length === 1;

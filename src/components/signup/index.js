@@ -104,7 +104,7 @@ class SignUpFormBase extends React.Component {
 
   onSubmit = event => {
     const { username, email, passwordOne, isAdmin } = this.state;
-    const roles = [];
+    const roles = {};
     
     if (isAdmin) {
       roles.push(ROLES.ADMIN);
@@ -113,7 +113,6 @@ class SignUpFormBase extends React.Component {
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
-        // Create a user in your Firebase realtime database
         return this.props.firebase.user(authUser.user.uid).set({
           username,
           email,
@@ -147,7 +146,6 @@ class SignUpFormBase extends React.Component {
   };
 
   render() {
-    /* const { classes } = this.props; */
     const {
       username,
       email,
@@ -205,7 +203,7 @@ class SignUpFormBase extends React.Component {
                 type="password"
                 placeholder="Confirm Password"
               /><br/>
-              <label style={{ float: "center", width: "50%"}}>
+              {/* <label style={{ float: "center", width: "50%"}}>
                 Admin:
                 <Input
                 style={{ width: "5%", float: "center"}}
@@ -215,7 +213,7 @@ class SignUpFormBase extends React.Component {
                   checked={isAdmin}
                   onChange={this.onChangeCheckbox}
                 />
-              </label>
+              </label> */}
               <br></br>
               <Button 
               style={styles.button}

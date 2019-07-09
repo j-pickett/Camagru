@@ -1,7 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
-import { display } from '@material-ui/system';
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -25,10 +24,10 @@ const firebaseConfig = {
       this.facebookProvider = new firebase.auth.FacebookAuthProvider();
       this.twitterProvider = new firebase.auth.TwitterAuthProvider();
     };
-
-doCreateUserWithEmailAndPassword = (email, password) => {
+  
+doCreateUserWithEmailAndPassword = (email, password) => 
 this.auth.createUserWithEmailAndPassword(email, password);
-}
+
 
 doSignInWithEmailAndPassword = (email, password) =>
 this.auth.signInWithEmailAndPassword(email, password);
@@ -48,7 +47,7 @@ doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
 doSendEmailVerification = () =>
 this.auth.currentUser.sendEmailVerification({
-  url: "https://shielded-coast-68814.herokuapp.com",
+  url: "https://camagru-42tty.herokuapp.com",
 });
 
 doEmailUpdate = email =>

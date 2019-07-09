@@ -1,10 +1,9 @@
 import Gallery from '../gallery';
 import React, { Component } from 'react';
-import Webcam from '../webcam/webcam';
-import Dropzone from 'react-dropzone';
 const styles = {
     gallery: {
-      paddingTop: 10,
+      position: "center",
+      align: "center",
     },
     webcam: {
       height: '50%',
@@ -14,12 +13,9 @@ const styles = {
 export default class LandingPage extends Component {
     render() {
       return (
-        <div>
+        <div style={styles.gallery}>
           <div style={styles.gallery}>
       <Gallery/>
-      </div>
-      <div style={styles.webcam}>
-        <Webcam />
       </div>
         </div>
       )};

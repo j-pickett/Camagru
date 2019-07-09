@@ -193,18 +193,7 @@ class PrimarySearchAppBar extends React.Component {
             <Typography className={classes.title} variant="h6" noWrap >
             
             </Typography>
-            {/* <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
-            </div> */}
+
 
              <div className={classes.NavBanner}>
              <Router>

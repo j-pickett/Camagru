@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -10,7 +9,6 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import Comment from '@material-ui/icons/Comment';
@@ -45,7 +43,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ImageCard = ({src, timeStamp, selected, liked, handleLike, authUser }) =>  {
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded,] = React.useState(false);
 	const imgToHandle = src;
 	const newtime = timeStamp;
 	const classes = useStyles();
